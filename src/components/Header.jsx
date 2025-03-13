@@ -1,15 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import LogoTickitz from "/images/logo/logo-Tickitz.svg";
 
 export default function Header() {
+  const [isOpen, setOpen] = useState(false);
+
+  const toggleMenu = () => {
+    if (isOpen) setOpen(false);
+    if (!isOpen) setOpen(true);
+  };
+
   return (
     <>
-      <header className="header bg-color-ligth shadow-sm">
-        <div class="ml-4">
+      <header className="header bg-color-ligth shadow-sm sticky">
+        <div class="ml-8">
           <img src={LogoTickitz} alt="logo-tickitz" />
         </div>
-        <nav class="absolute top-[70px] right-0 left-0">
-          <ul className="flex flex-col shadow-sm">
+        <nav
+          class={`nav-bar ${
+            isOpen ? "translate-x-0" : "-translate-x-full"
+          } lg:translate-x-0`}
+        >
+          <ul className="flex flex-col shadow-sm lg:flex-row lg:gap-8 lg:shadow-none">
             <li className="h-12 text-center flex justify-center items-center">
               <a
                 href="./index.html"
@@ -38,12 +49,14 @@ export default function Header() {
         </nav>
         <div
           class="account"
-          className="flex py-3 justify-center gap-3 absolute top-[214px] right-0 left-0 shadow-md"
+          className={`flex py-3 justify-center gap-3 absolute top-[214px] right-0 left-0 shadow-md transition-all duration-100 ${
+            isOpen ? "translate-x-0" : "-translate-x-full"
+          } lg:static lg:translate-x-0 lg:mr-8 lg:shadow-none`}
         >
           <a href="./log-in.html">
             <button
               type="button"
-              className="button-md bg-color-ligth text-color-primary border-sm-primary"
+              className="button-md bg-color-ligth text-color-primary border-primary"
             >
               SignIn
             </button>
@@ -57,10 +70,18 @@ export default function Header() {
             </button>
           </a>
         </div>
-        <div class="hamburger">
-          <span class="bar"></span>
-          <span class="bar w-2/3"></span>
-          <span class="bar"></span>
+        <div class="hamburger" onClick={toggleMenu}>
+          <span
+            class={`bar ${
+              isOpen ? "translate-y-[8px] -rotate-45" : "translate-y-0 rotate-0"
+            }`}
+          ></span>
+          <span class={`bar w-2/3 ${isOpen ? "scale-0" : "scale-100"}`}></span>
+          <span
+            class={`bar ${
+              isOpen ? "translate-y-[-8px] rotate-45" : "translate-y-0 rotate-0"
+            }`}
+          ></span>
         </div>
       </header>
     </>
