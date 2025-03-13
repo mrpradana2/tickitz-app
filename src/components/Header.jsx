@@ -1,8 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LogoTickitz from "/images/logo/logo-Tickitz.svg";
+import LogoTickitz2 from "/images/logo/Tickitz2.svg";
 
 export default function Header() {
   const [isOpen, setOpen] = useState(false);
+  const [screenWidth, setScreenWIdth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWIdth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const toggleMenu = () => {
     if (isOpen) setOpen(false);
@@ -13,7 +27,10 @@ export default function Header() {
     <>
       <header className="header bg-color-ligth shadow-sm sticky">
         <div class="ml-8">
-          <img src={LogoTickitz} alt="logo-tickitz" />
+          <img
+            src={screenWidth < 1024 ? LogoTickitz2 : LogoTickitz}
+            alt="logo-tickitz"
+          />
         </div>
         <nav
           class={`nav-bar ${
