@@ -3,7 +3,7 @@ import React from "react";
 export default function Subscribe() {
   return (
     <>
-      <section className="mb-12">
+      <section className="my-12">
         <div className="bg-color-primary p-12 rounded-xl w-10/12 mx-auto relative overflow-hidden after:content-[''] after:absolute after:bottom-0 after:right-0 after:w-[200px] after:h-[200px] after:rounded-full after:border-6 after:border-slate-50 after:translate-1/2">
           <h1 className="font-normal text-center text-3xl max-w-lg mx-auto text-color-ligth mb-10">
             Subscribe to our newsletter
