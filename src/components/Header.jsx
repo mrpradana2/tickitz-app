@@ -25,15 +25,15 @@ export default function Header() {
 
   return (
     <>
-      <header className="header bg-color-ligth shadow-sm sticky">
-        <div class="ml-8">
+      <header className="header bg-color-ligth shadow-sm sticky lg:sticky top-0 z-10">
+        <div class="ml-8 md:ml-20">
           <img
             src={screenWidth < 1024 ? LogoTickitz2 : LogoTickitz}
             alt="logo-tickitz"
           />
         </div>
         <nav
-          class={`nav-bar ${
+          class={`nav-bar bg-slate-50 ${
             isOpen ? "translate-x-0" : "-translate-x-full"
           } lg:translate-x-0`}
         >
@@ -65,10 +65,9 @@ export default function Header() {
           </ul>
         </nav>
         <div
-          class="account"
-          className={`flex py-3 justify-center gap-3 absolute top-[214px] right-0 left-0 shadow-md transition-all duration-100 ${
+          className={`flex py-3 justify-center gap-3 bg-slate-50 absolute top-[214px] right-0 left-0 shadow-md transition-all duration-100 md:pr-[48px] ${
             isOpen ? "translate-x-0" : "-translate-x-full"
-          } lg:static lg:translate-x-0 lg:mr-8 lg:shadow-none`}
+          } lg:static lg:translate-x-0 lg:mr-8 lg:shadow-none lg:bg-transparent`}
         >
           <a href="./log-in.html">
             <button
