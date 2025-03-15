@@ -3,7 +3,7 @@ import React from "react";
 export default function () {
   return (
     <>
-      <section className="grid grid-cols-1 gap-8 mt-16 md:px-16 lg:grid-cols-2">
+      <section className="grid grid-cols-1 gap-8 mt-16 md:px-16 lg:grid-cols-2 mb-16">
         <div className="flex flex-col gap-4 justify-center">
           <h6 className="text-color-primary text-[1rem] font-extrabold text-center lg:text-left">
             MOVIE TICKET PURCHASES #1 IN INDONESIA

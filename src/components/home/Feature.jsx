@@ -7,7 +7,7 @@ import Shield from "/icons/icon-home/shield-done.svg";
 export default function Feature() {
   return (
     <>
-      <section className="px-16 grid grid-cols-1 gap-4">
+      <section className="px-16 grid grid-cols-1 gap-4 mt-16 mb-16">
         <h5 className="text-color-primary text-center md:text-left">
           WHY CHOOSE US
         </h5>
