@@ -186,4 +186,16 @@
   .card-btn-ticket {
     @apply absolute top-1/2 left-1/2 w-9/12 py-2 px-4 rounded-md -translate-1/2 translate-y-[35px] z-10 opacity-0 cursor-pointer transition-all duration-100  hover:scale-[1.06] active:scale-100;
   }
+
+  .label {
+    @apply text-sm font-medium;
+  }
+
+  .input {
+    @apply border border-slate-400 py-2 px-2 rounded-md focus:outline-blue-500;
+  }
+
+  .button-lg {
+    @apply w-full py-2 px-2 rounded-sm transition-all duration-100 cursor-pointer active:scale-[0.98] md:hover:scale-[1.01] md:active:scale-100;
+  }
 }
