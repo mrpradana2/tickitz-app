@@ -6,7 +6,7 @@ export default function UpcomingMovie() {
   return (
     <>
       {/* upcoming movie */}
-      <section className="flex flex-col gap-4 md:grid md:grid-cols-6 px-8">
+      <section className="flex flex-col gap-4 md:grid md:grid-cols-6 md:px-16">
         <h5 className="text-color-primary text-center md:col-span-6 md:text-left">
           UPCOMING MOVIES
         </h5>
