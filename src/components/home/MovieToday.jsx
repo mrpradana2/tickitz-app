@@ -4,7 +4,7 @@ import Hero from "/images/hero/hero-1.png";
 export default function MovieToday() {
   return (
     <>
-      <section className="flex flex-col gap-4">
+      <section className="flex flex-col gap-4 px-16">
         <h5 className="text-color-primary text-center">MOVIES</h5>
         <h1 className="font-medium text-center text-3xl max-w-lg mx-auto">
           Exciting Movies That Should Be Watched Today
