@@ -15,7 +15,6 @@
 
 @theme {
   --font-display: "Mulish", sans-serif;
-  /* --shadow-bottom: 0 0 5px grey; */
 }
 
 @layer base {
