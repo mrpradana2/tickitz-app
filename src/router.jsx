@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router";
-import Signup from "./pages/auth/signin";
-import Signin from "./pages/auth/signup";
+import Signin from "./pages/auth/signin";
+import Signup from "./pages/auth/signup";
 import Home from "./pages/Home";
 import ListMovies from "./pages/movie/ListMovie";
 import Details from "./pages/movie/Details";
