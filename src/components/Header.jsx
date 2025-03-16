@@ -23,6 +23,14 @@ export default function Header() {
     if (!isOpen) setOpen(true);
   };
 
+  function goToSignIn() {
+    location.href = "/auth/signin";
+  }
+
+  function goToSignUp() {
+    location.href = "/auth/signup";
+  }
+
   return (
     <>
       <header className="header bg-color-ligth shadow-sm sticky lg:sticky top-0 z-10">
@@ -47,16 +55,13 @@ export default function Header() {
               </a>
             </li>
             <li className="h-12 text-center flex justify-center items-center">
-              <a
-                href="./index2.html"
-                className="w-full h-full inline-block pt-3"
-              >
+              <a href="/movie" className="w-full h-full inline-block pt-3">
                 Movie
               </a>
             </li>
             <li className="h-12 text-center flex justify-center items-center">
               <a
-                href="./order-page.html"
+                href="./movie.html"
                 className="w-full h-full inline-block pt-3"
               >
                 Buy Ticket
@@ -69,22 +74,20 @@ export default function Header() {
             isOpen ? "translate-x-0" : "-translate-x-full"
           } lg:static lg:translate-x-0 lg:mr-8 lg:shadow-none lg:bg-transparent`}
         >
-          <a href="./log-in.html">
-            <button
-              type="button"
-              className="button-md bg-color-ligth text-color-primary border-primary"
-            >
-              SignIn
-            </button>
-          </a>
-          <a href="./sign-up.html">
-            <button
-              type="button"
-              className="button-md bg-color-primary text-color-ligth border-sm-primary"
-            >
-              Sign Up
-            </button>
-          </a>
+          <button
+            type="button"
+            className="button-md bg-color-ligth text-color-primary border-primary"
+            onClick={goToSignIn}
+          >
+            SignIn
+          </button>
+          <button
+            type="button"
+            className="button-md bg-color-primary text-color-ligth border-sm-primary"
+            onClick={goToSignUp}
+          >
+            Sign Up
+          </button>
         </div>
         <div class="hamburger" onClick={toggleMenu}>
           <span
