@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-// import Hero from "/images/hero/hero-1.png";
 
 export default function ListMovies() {
   const [dataMovies, setDataMovies] = useState([]);
+
   useEffect(() => {
     const options = {
       method: "GET",
@@ -20,7 +20,6 @@ export default function ListMovies() {
       .then((data) => {
         const dataMovie = data.results;
         setDataMovies(dataMovie);
-        console.log(dataMovie);
       })
       .catch((err) => console.log(err));
   }, []);
