@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import LogoTickitz from "/images/logo/logo-Tickitz.svg";
 import LogoTickitz2 from "/images/logo/Tickitz2.svg";
+import { href } from "react-router";
 
 export default function Header() {
   const [isOpen, setOpen] = useState(false);
@@ -47,10 +48,7 @@ export default function Header() {
         >
           <ul className="flex flex-col shadow-sm lg:flex-row lg:gap-8 lg:shadow-none">
             <li className="h-12 text-center flex justify-center items-center">
-              <a
-                href="./index.html"
-                className="w-full h-full inline-block pt-3"
-              >
+              <a href="/" className="w-full h-full inline-block pt-3">
                 Home
               </a>
             </li>
@@ -60,10 +58,7 @@ export default function Header() {
               </a>
             </li>
             <li className="h-12 text-center flex justify-center items-center">
-              <a
-                href="./movie.html"
-                className="w-full h-full inline-block pt-3"
-              >
+              <a href="#" className="w-full h-full inline-block pt-3">
                 Buy Ticket
               </a>
             </li>
