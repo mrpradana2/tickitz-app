@@ -1,4 +1,3 @@
-import React from "react";
 import LayoutAuth from "../../layouts/LayoutAuth";
 import Eye from "/icons/icon-auth/eye.svg";
 import Google from "/icons/icon-auth/icons-google.svg";
@@ -29,52 +28,54 @@ export default function signin() {
               </p>
             </div>
           </div>
-          <div className="flex flex-col gap-2 mb-4">
-            <label htmlFor="email" className="label">
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              className="input"
-              placeholder="Write your email"
-            />
-          </div>
-          <div className="flex flex-col gap-2 mb-4 relative">
-            <label htmlFor="password" className="label">
-              Password
-            </label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              className="input pr-8"
-              placeholder="Write your password"
-            />
-            <img
-              src={Eye}
-              alt="icon-eye"
-              className="w-5 absolute bottom-2.5 right-2"
-            />
-          </div>
-          <div className="flex gap-2 items-center">
-            <input
-              type="checkbox"
-              name="termcondition"
-              id="termcondition"
-              className="cursor-pointer"
-            />
-            <label htmlFor="termcondition" className="text-sm cursor-pointer">
-              I agree to terms & conditions
-            </label>
-          </div>
-          <button
-            type="submit"
-            className="button-lg bg-color-primary text-color-ligth my-4"
-          >
-            Login
-          </button>
+          <form action="/" method="POST">
+            <div className="flex flex-col gap-2 mb-4">
+              <label htmlFor="email" className="label">
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                className="input"
+                placeholder="Write your email"
+              />
+            </div>
+            <div className="flex flex-col gap-2 mb-4 relative">
+              <label htmlFor="password" className="label">
+                Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                className="input pr-8"
+                placeholder="Write your password"
+              />
+              <img
+                src={Eye}
+                alt="icon-eye"
+                className="w-5 absolute bottom-2.5 right-2"
+              />
+            </div>
+            <div className="flex gap-2 items-center">
+              <input
+                type="checkbox"
+                name="termcondition"
+                id="termcondition"
+                className="cursor-pointer"
+              />
+              <label htmlFor="termcondition" className="text-sm cursor-pointer">
+                I agree to terms & conditions
+              </label>
+            </div>
+            <button
+              type="submit"
+              className="button-lg bg-color-primary text-color-ligth my-4"
+            >
+              Login
+            </button>
+          </form>
           <p className="text-sm text-color-grey text-center mt-4">
             Already have an account?
             <a href="#" className="text-sm text-color-primary hover:underline">
