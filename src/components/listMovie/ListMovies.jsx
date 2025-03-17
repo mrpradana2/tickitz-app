@@ -138,7 +138,7 @@ export default function ListMovies() {
                 <h1 className="text-lg font-bold">{movie.title}</h1>
                 <div className="flex gap-3 flex-wrap">
                   <div className="py-[3px] px-2 bg-color-ligthgrey w-max rounded-xl">
-                    <p className="text-sm text-color-dark">genre</p>
+                    <p className="text-sm text-color-dark">genre</p>;
                   </div>
                 </div>
               </div>

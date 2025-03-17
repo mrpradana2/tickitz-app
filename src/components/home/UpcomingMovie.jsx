@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Hero from "/images/hero/hero-1.png";
 import ArrowUp from "/icons/icon-home/arrow-up.svg";
 
@@ -28,6 +28,7 @@ export default function UpcomingMovie() {
           </button>
         </div>
         <div className="box-card col-span-6">
+          {/* end card 1 */}
           {/* card1 */}
           <div className="card">
             <div className="card-img-box group">
