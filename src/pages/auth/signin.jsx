@@ -1,15 +1,47 @@
-import React from "react";
+import { useContext, useEffect } from "react";
 import LayoutAuth from "../../layouts/LayoutAuth";
 import Eye from "/icons/icon-auth/eye.svg";
 import Google from "/icons/icon-auth/icons-google.svg";
 import Facebook from "/icons/icon-auth/icons-fb.svg";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { useNavigate } from "react-router";
+// import { userContext } from "../../contexts/userContext";
 
-export default function Signup() {
+export default function Signin() {
+  const navigate = useNavigate();
+  // const [user, setUser] = useContext(userContext);
+  const [user, setUser] = useLocalStorage("data:user", {
+    email: "",
+    password: "",
+  });
+
+  useEffect(() => {
+    // IIFE
+    (function () {
+      if (user.email && user.password) navigate("/");
+    })();
+  }, [user]);
+
+  function submitHandler(e) {
+    e.preventDefault();
+    const form = new FormData();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    form.append("email", email);
+    form.append("password", password);
+    const submittedUser = {};
+    form.forEach((value, key) => {
+      Object.assign(submittedUser, { [key]: value });
+    });
+    console.log(submittedUser);
+    setUser(submittedUser);
+  }
+
   return (
     <>
       <LayoutAuth
         content={
-          <div>
+          <form onSubmit={submitHandler}>
             <h1 className="text-2xl font-bold mb-4">Welcome Back👋</h1>
             <p className="text-color-grey text-sm mb-4">
               Sign in with your data that you entered during your registration
@@ -78,7 +110,7 @@ export default function Signup() {
                 </p>
               </button>
             </div>
-          </div>
+          </form>
         }
       ></LayoutAuth>
     </>
