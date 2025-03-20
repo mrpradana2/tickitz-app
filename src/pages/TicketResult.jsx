@@ -9,8 +9,10 @@ export default function Payment() {
     <LayoutPage
       content={
         <>
-          <HeroTicketResult />
-          <Ticket />
+          <section className="lg:grid lg:grid-cols-5 lg:h-[1000px] lg:mb-10">
+            <HeroTicketResult />
+            <Ticket />
+          </section>
         </>
       }
     />
