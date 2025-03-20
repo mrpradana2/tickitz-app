@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+// import getMovie from "../../api/getMovieList.js";
 
 export default function ListMovies() {
   const [dataMovies, setDataMovies] = useState([]);
