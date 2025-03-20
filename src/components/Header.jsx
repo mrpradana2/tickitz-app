@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import LogoTickitz from "/images/logo/logo-Tickitz.svg";
 import LogoTickitz2 from "/images/logo/Tickitz2.svg";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { useNavigate, Link } from "react-router";
 // import { userContext } from "../contexts/userContext";
 
 export default function Header() {
@@ -78,7 +79,7 @@ export default function Header() {
           </ul>
         </nav>
         <div
-          className={`flex py-3 justify-center gap-3 bg-slate-50 absolute top-[214px] right-0 left-0 shadow-md transition-all duration-100 md:pr-[48px] ${
+          className={`flex py-3 justify-center gap-3 bg-slate-50 absolute top-[214px] right-0 left-0 shadow-md transition-all duration-100 lg:pr-[48px] ${
             isOpen ? "translate-x-0" : "-translate-x-full"
           } lg:static lg:translate-x-0 lg:mr-8 lg:shadow-none lg:bg-transparent`}
         >
