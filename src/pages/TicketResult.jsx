@@ -1,5 +1,6 @@
 import LayoutPage from "../layouts/LayoutPage";
-import TicketResult from "../components/buyTicket/TicketResult";
+import HeroTicketResult from "../components/buyTicket/HeroTicketResult";
+import Ticket from "../components/buyTicket/Ticket";
 
 import React from "react";
 
@@ -8,7 +9,8 @@ export default function Payment() {
     <LayoutPage
       content={
         <>
-          <TicketResult />
+          <HeroTicketResult />
+          <Ticket />
         </>
       }
     />
