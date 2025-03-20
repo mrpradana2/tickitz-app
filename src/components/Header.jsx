@@ -1,9 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import LogoTickitz from "/images/logo/logo-Tickitz.svg";
 import LogoTickitz2 from "/images/logo/Tickitz2.svg";
-import { href } from "react-router";
+import useLocalStorage from "../hooks/useLocalStorage";
+// import { userContext } from "../contexts/userContext";
 
 export default function Header() {
+  const navigate = useNavigate();
+  // const [user, setUser] = useContext(userContext);
+  // console.log(userCtx);
+  const [user, setUser] = useLocalStorage("data:user", {});
+  function logOut() {
+    setUser({
+      email: "",
+      password: "",
+    });
+    navigate("/");
+  }
+
   const [isOpen, setOpen] = useState(false);
   const [screenWidth, setScreenWIdth] = useState(window.innerWidth);
 
@@ -69,20 +82,34 @@ export default function Header() {
             isOpen ? "translate-x-0" : "-translate-x-full"
           } lg:static lg:translate-x-0 lg:mr-8 lg:shadow-none lg:bg-transparent`}
         >
-          <button
-            type="button"
-            className="button-md bg-color-ligth text-color-primary border-primary"
-            onClick={goToSignIn}
-          >
-            SignIn
-          </button>
-          <button
-            type="button"
-            className="button-md bg-color-primary text-color-ligth border-sm-primary"
-            onClick={goToSignUp}
-          >
-            Sign Up
-          </button>
+          {user.email && user.password ? (
+            <button
+              type="button"
+              className="button-md bg-color-ligth text-color-primary border-primary"
+              onClick={logOut}
+            >
+              LogOut
+            </button>
+          ) : (
+            <>
+              <Link to={"/auth/login"}>
+                <button
+                  type="button"
+                  className="button-md bg-color-ligth text-color-primary border-primary"
+                  onClick={goToSignIn}
+                >
+                  SignIn
+                </button>
+              </Link>
+              <button
+                type="button"
+                className="button-md bg-color-primary text-color-ligth border-sm-primary"
+                onClick={goToSignUp}
+              >
+                Sign Up
+              </button>
+            </>
+          )}
         </div>
         <div class="hamburger" onClick={toggleMenu}>
           <span
