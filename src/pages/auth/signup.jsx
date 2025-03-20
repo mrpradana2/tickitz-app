@@ -1,9 +1,23 @@
+import { useState } from "react";
 import LayoutAuth from "../../layouts/LayoutAuth";
 import Eye from "/icons/icon-auth/eye.svg";
 import Google from "/icons/icon-auth/icons-google.svg";
 import Facebook from "/icons/icon-auth/icons-fb.svg";
 
-export default function signin() {
+export default function Signup() {
+  const [_, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  function submitHandler(e) {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    setUser({ email, password });
+    localStorage.setItem("data:user", JSON.stringify({ email, password }));
+  }
+
   return (
     <LayoutAuth
       content={
@@ -28,7 +42,7 @@ export default function signin() {
               </p>
             </div>
           </div>
-          <form action="/" method="POST">
+          <form onSubmit={submitHandler}>
             <div className="flex flex-col gap-2 mb-4">
               <label htmlFor="email" className="label">
                 Email
