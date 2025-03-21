@@ -48,7 +48,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="header bg-color-ligth shadow-sm sticky lg:sticky top-0 z-10">
+      <header className="header bg-color-ligth shadow-sm sticky lg:sticky top-0 z-50">
         <div class="ml-8 md:ml-20">
           <img
             src={screenWidth < 1024 ? LogoTickitz2 : LogoTickitz}
