@@ -49,14 +49,14 @@ export default function Header() {
   return (
     <>
       <header className="header bg-color-ligth shadow-sm sticky lg:sticky top-0 z-50">
-        <div class="ml-8 md:ml-20">
+        <div className="ml-8 md:ml-20">
           <img
             src={screenWidth < 1024 ? LogoTickitz2 : LogoTickitz}
             alt="logo-tickitz"
           />
         </div>
         <nav
-          class={`nav-bar bg-slate-50 ${
+          className={`nav-bar bg-slate-50 ${
             isOpen ? "translate-x-0" : "-translate-x-full"
           } lg:translate-x-0`}
         >
@@ -112,15 +112,17 @@ export default function Header() {
             </>
           )}
         </div>
-        <div class="hamburger" onClick={toggleMenu}>
+        <div className="hamburger" onClick={toggleMenu}>
           <span
-            class={`bar ${
+            className={`bar ${
               isOpen ? "translate-y-[8px] -rotate-45" : "translate-y-0 rotate-0"
             }`}
           ></span>
-          <span class={`bar w-2/3 ${isOpen ? "scale-0" : "scale-100"}`}></span>
           <span
-            class={`bar ${
+            className={`bar w-2/3 ${isOpen ? "scale-0" : "scale-100"}`}
+          ></span>
+          <span
+            className={`bar ${
               isOpen ? "translate-y-[-8px] rotate-45" : "translate-y-0 rotate-0"
             }`}
           ></span>
