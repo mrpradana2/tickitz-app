@@ -1,14 +1,36 @@
-import { useEffect, useState } from "react";
-import getMovieListNowPlaying from "../../api/getMovieListNowPlaying";
+import { useEffect } from "react";
 import { Link } from "react-router";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchData } from "../../redux/slices/fetchData";
 
 export default function MovieToday() {
-  const [dataMovies, setDataMovies] = useState([]);
+  // const [dataMovies, setDataMovies] = useState([]);
+
+  // useEffect(() => {
+  //   getMovieListNowPlaying().then((movieList) => setDataMovies(movieList));
+  // }, []);
+
+  const dispatch = useDispatch();
+  const {
+    item: movies,
+    isLoading,
+    isError,
+    error,
+  } = useSelector((state) => state.data);
 
   useEffect(() => {
-    getMovieListNowPlaying().then((movieList) => setDataMovies(movieList));
-  }, []);
+    dispatch(fetchData());
+  }, [dispatch]);
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error: {error}</div>;
+  }
+
+  console.log(movies);
   return (
     <>
       <section className="flex flex-col gap-4 md:px-16 mb-16 mt-16">
@@ -18,7 +40,7 @@ export default function MovieToday() {
         </h1>
         <div className="box-card">
           {/* card1 */}
-          {dataMovies.map((movie) => (
+          {movies.map((movie) => (
             <div className="card" key={movie.id}>
               <div className="card-img-box group">
                 <img
