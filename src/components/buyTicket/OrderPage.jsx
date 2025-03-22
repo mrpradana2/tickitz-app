@@ -2,13 +2,33 @@ import React, { useState } from "react";
 import Hero from "/images/hero/hero-3.png";
 import Seat from "./Seat";
 import Logo from "/images/sponsor/CineOne21.svg";
+import { useParams } from "react-router";
 
 function OrderPage() {
   const [openModal, setOpenModal] = useState(false);
-
   function modalHandler() {
     openModal ? setOpenModal(false) : setOpenModal(true);
   }
+
+  const [detailsMovie, setDetailsMovie] = useState({});
+  const { id } = useParams();
+
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${VITE_AUTH}`,
+    },
+  };
+
+  useEffect(() => {
+    fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US`, options)
+      .then((res) => res.json())
+      .then((res) => setDetailsMovie(res))
+      .catch((err) => console.error(err));
+  }, []);
+
+  console.log(detailsMovie);
 
   return (
     <>

@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import Ebvid from "/images/sponsor/ebv.id.svg";
 
 export default function BookTicket() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  function openHandler() {
+    isOpen ? setIsOpen(false) : setIsOpen(true);
+  }
+
   return (
     <>
       <section className="flex flex-col gap-4 px-8 py-14">
@@ -37,11 +43,22 @@ export default function BookTicket() {
           <p className="text-center">Results</p>
           <div className="flex flex-col gap-4">
             <div className="w-full px-8 py-8 border border-slate-300 rounded-lg flex flex-col gap-4">
-              <img src={Ebvid} alt="logo" className="h-12 self-start" />
-              <h2 className="text-2xl font-bold">EBV.id</h2>
-              <p className="text-md text-slate-400">
-                Whatever street No.12, South Purwokerto
-              </p>
+              <div onClick={openHandler}>
+                <img src={Ebvid} alt="logo" className="h-12 self-start" />
+                <h2 className="text-2xl font-bold">EBV.id</h2>
+                <p className="text-md text-slate-400">
+                  Whatever street No.12, South Purwokerto
+                </p>
+              </div>
+              <div className={`${isOpen ? "block" : "hidden"}`}>
+                <div>
+                  <h1>Reguler</h1>
+                  {/* <div>
+                    <input type="radio" name="" id="" />
+                    <label htmlFor=""></label>
+                  </div> */}
+                </div>
+              </div>
             </div>
           </div>
         </div>
