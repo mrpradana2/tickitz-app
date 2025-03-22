@@ -1,41 +1,12 @@
-// import React, { useEffect, useState } from "react";
 import { useEffect, useState } from "react";
+import getMovieListNowPlaying from "../../api/getMovieListNowPlaying";
 
 export default function MovieToday() {
-  const [listMovie, setListMovie] = useState([]);
+  const [dataMovies, setDataMovies] = useState([]);
 
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZDI4MmIyYjM3NDFiZjdlYzNjNGM0MTgxZWFjODY1NCIsIm5iZiI6MTc0MTM5OTY5Ny4yODQ5OTk4LCJzdWIiOiI2N2NiYTY5MTdjOTY3ZTA0ZDU1Yjk4MGQiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.M00nqUeo-tWLfy6TC1qq_bjOGAmFMOsgcV1p-0tHfME",
-    },
-  };
-
-  const url =
-    "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1";
   useEffect(() => {
-    fetch(url, options)
-      .then((response) => response.json())
-      .then((datas) => {
-        const listMovie = datas.results;
-        setListMovie(listMovie);
-        console.log(listMovie);
-      })
-      .catch((err) => console.error(err));
+    getMovieListNowPlaying().then((movieList) => setDataMovies(movieList));
   }, []);
-
-  // fetch(
-  //   "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1",
-  //   options
-  // )
-  //   .then((response) => response.json())
-  //   .then((datas) => {
-  //     const upcomingMovie = datas.results;
-  //     setUpcomingMovies(upcomingMovie);
-  //   })
-  //   .catch((err) => console.error(err));
 
   return (
     <>
@@ -46,7 +17,7 @@ export default function MovieToday() {
         </h1>
         <div className="box-card">
           {/* card1 */}
-          {listMovie.map((movie) => (
+          {dataMovies.map((movie) => (
             <div className="card">
               <div className="card-img-box group">
                 <img
@@ -68,9 +39,11 @@ export default function MovieToday() {
               </div>
               <h1 className="text-lg font-bold">{movie.title}</h1>
               <div className="flex gap-3 flex-wrap">
-                <div className="py-[3px] px-2 bg-color-ligthgrey w-max rounded-xl">
-                  <p className="text-sm text-color-dark">Action</p>
-                </div>
+                {movie.genres.map((genre) => (
+                  <div className="py-[3px] px-2 bg-color-ligthgrey w-max rounded-xl">
+                    <p className="text-sm text-color-dark">{genre}</p>
+                  </div>
+                ))}
               </div>
             </div>
           ))}

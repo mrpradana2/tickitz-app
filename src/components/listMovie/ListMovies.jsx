@@ -1,29 +1,14 @@
 import React, { useEffect, useState } from "react";
-// import getMovie from "../../api/getMovieList.js";
+import getMovieListNowPlaying from "../../api/getMovieListNowPlaying";
 
 export default function ListMovies() {
   const [dataMovies, setDataMovies] = useState([]);
 
   useEffect(() => {
-    const options = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZDI4MmIyYjM3NDFiZjdlYzNjNGM0MTgxZWFjODY1NCIsIm5iZiI6MTc0MTM5OTY5Ny4yODQ5OTk4LCJzdWIiOiI2N2NiYTY5MTdjOTY3ZTA0ZDU1Yjk4MGQiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.M00nqUeo-tWLfy6TC1qq_bjOGAmFMOsgcV1p-0tHfME",
-      },
-    };
-    const url =
-      "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1";
-
-    fetch(url, options)
-      .then((response) => response.json())
-      .then((data) => {
-        const dataMovie = data.results;
-        setDataMovies(dataMovie);
-      })
-      .catch((err) => console.log(err));
+    getMovieListNowPlaying().then((movieList) => setDataMovies(movieList));
   }, []);
+
+  console.log(dataMovies);
 
   return (
     <>
@@ -138,9 +123,11 @@ export default function ListMovies() {
                 </div>
                 <h1 className="text-lg font-bold">{movie.title}</h1>
                 <div className="flex gap-3 flex-wrap">
-                  <div className="py-[3px] px-2 bg-color-ligthgrey w-max rounded-xl">
-                    <p className="text-sm text-color-dark">genre</p>;
-                  </div>
+                  {movie.genres.map((genre) => (
+                    <div className="py-[3px] px-2 bg-color-ligthgrey w-max rounded-xl">
+                      <p className="text-sm text-color-dark">{genre}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             ))}

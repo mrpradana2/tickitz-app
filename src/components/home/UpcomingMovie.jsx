@@ -1,11 +1,18 @@
-import React, { useState } from "react";
-import Hero from "/images/hero/hero-1.png";
+import { useState, useEffect } from "react";
 import ArrowUp from "/icons/icon-home/arrow-up.svg";
+import getMovieListUpcoming from "../../api/getMovieListUpcoming";
 
 export default function UpcomingMovie() {
+  const [dataMovies, setDataMovies] = useState([]);
+
+  useEffect(() => {
+    getMovieListUpcoming().then((movieList) => setDataMovies(movieList));
+  }, []);
+
+  console.log(dataMovies);
+
   return (
     <>
-      {/* upcoming movie */}
       <section className="flex flex-col gap-4 md:grid md:grid-cols-6 md:px-16">
         <h5 className="text-color-primary text-center md:col-span-6 md:text-left">
           UPCOMING MOVIES
@@ -29,122 +36,38 @@ export default function UpcomingMovie() {
         </div>
         <div className="box-card col-span-6">
           {/* end card 1 */}
-          {/* card1 */}
-          <div className="card">
-            <div className="card-img-box group">
-              <img src={Hero} alt="thumbnail" />
-              <button
-                type="button"
-                className="card-btn-details text-color-ligth group-hover:opacity-100 "
-              >
-                Details
-              </button>
-              <button
-                type="button"
-                className="card-btn-ticket text-color-ligth bg-color-primary group-hover:opacity-100"
-              >
-                Buy Ticket
-              </button>
-            </div>
-            <h1 className="text-lg font-bold">Black Widow</h1>
-            <h2 className="text-sm font-bold text-color-primary">
-              December 2024
-            </h2>
-            <div className="flex gap-3 flex-wrap">
-              <div className="py-[3px] px-2 bg-color-ligthgrey w-max rounded-xl">
-                <p className="text-sm text-color-dark">Action</p>
+          {dataMovies.map((movie) => (
+            <div className="card">
+              <div className="card-img-box group">
+                <img
+                  src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                  alt="thumbnail"
+                />
+                <button
+                  type="button"
+                  className="card-btn-details text-color-ligth group-hover:opacity-100 "
+                >
+                  Details
+                </button>
+                <button
+                  type="button"
+                  className="card-btn-ticket text-color-ligth bg-color-primary group-hover:opacity-100"
+                >
+                  Buy Ticket
+                </button>
+              </div>
+              <h1 className="text-lg font-bold">{movie.title}</h1>
+              <div className="flex gap-3 flex-wrap">
+                {movie.genres.map((genre) => (
+                  <div className="py-[3px] px-2 bg-color-ligthgrey w-max rounded-xl">
+                    <p className="text-sm text-color-dark">{genre}</p>
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
-          {/* end card 1 */}
-          {/* card1 */}
-          <div className="card">
-            <div className="card-img-box group">
-              <img src={Hero} alt="thumbnail" />
-              <button
-                type="button"
-                className="card-btn-details text-color-ligth group-hover:opacity-100 "
-              >
-                Details
-              </button>
-              <button
-                type="button"
-                className="card-btn-ticket text-color-ligth bg-color-primary group-hover:opacity-100"
-              >
-                Buy Ticket
-              </button>
-            </div>
-            <h1 className="text-lg font-bold">Black Widow</h1>
-            <h2 className="text-sm font-bold text-color-primary">
-              December 2024
-            </h2>
-            <div className="flex gap-3 flex-wrap">
-              <div className="py-[3px] px-2 bg-color-ligthgrey w-max rounded-xl">
-                <p className="text-sm text-color-dark">Action</p>
-              </div>
-            </div>
-          </div>
-          {/* end card 1 */}
-          {/* card1 */}
-          <div className="card">
-            <div className="card-img-box group">
-              <img src={Hero} alt="thumbnail" />
-              <button
-                type="button"
-                className="card-btn-details text-color-ligth group-hover:opacity-100 "
-              >
-                Details
-              </button>
-              <button
-                type="button"
-                className="card-btn-ticket text-color-ligth bg-color-primary group-hover:opacity-100"
-              >
-                Buy Ticket
-              </button>
-            </div>
-            <h1 className="text-lg font-bold">Black Widow</h1>
-            <h2 className="text-sm font-bold text-color-primary">
-              December 2024
-            </h2>
-            <div className="flex gap-3 flex-wrap">
-              <div className="py-[3px] px-2 bg-color-ligthgrey w-max rounded-xl">
-                <p className="text-sm text-color-dark">Action</p>
-              </div>
-            </div>
-          </div>
-          {/* end card 1 */}
-          {/* card1 */}
-          <div className="card">
-            <div className="card-img-box group">
-              <img src={Hero} alt="thumbnail" />
-              <button
-                type="button"
-                className="card-btn-details text-color-ligth group-hover:opacity-100 "
-              >
-                Details
-              </button>
-              <button
-                type="button"
-                className="card-btn-ticket text-color-ligth bg-color-primary group-hover:opacity-100"
-              >
-                Buy Ticket
-              </button>
-            </div>
-            <h1 className="text-lg font-bold">Black Widow</h1>
-            <h2 className="text-sm font-bold text-color-primary">
-              December 2024
-            </h2>
-            <div className="flex gap-3 flex-wrap">
-              <div className="py-[3px] px-2 bg-color-ligthgrey w-max rounded-xl">
-                <p className="text-sm text-color-dark">Action</p>
-              </div>
-            </div>
-          </div>
-          {/* end card 1 */}
+          ))}
         </div>
       </section>
-
-      {/* end upcoming */}
     </>
   );
 }
