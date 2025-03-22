@@ -13,34 +13,39 @@ import PrivateRoute from "./components/PrivateRoute";
 // import UserProvider from "./contexts/userContext";
 import ProfilePage from "./pages/profile/ProfilePage";
 
+import { Provider } from "react-redux";
+import store from "./redux/store";
+
 export default function Router() {
   return (
     // <UserProvider>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="auth">
-          <Route path="signin" element={<Signin />} />
-          <Route path="signup" element={<Signup />} />
-        </Route>
-        <Route path="movie">
-          <Route
-            index
-            element={
-              <PrivateRoute redirectTo="/auth/signin">
-                <ListMovies />
-              </PrivateRoute>
-            }
-          />
-          <Route path=":id" element={<Details />} />
-          <Route path="order/:id" element={<OrderPage />} />
-          <Route path="payment" element={<Payment />} />
-          <Route path="ticket-result" element={<TicketResult />} />
-        </Route>
-        <Route path="profile" element={<ProfilePage />} />
-        <Route path="admin" element={<AdminPage />} />
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="auth">
+            <Route path="signin" element={<Signin />} />
+            <Route path="signup" element={<Signup />} />
+          </Route>
+          <Route path="movie">
+            <Route
+              index
+              element={
+                <PrivateRoute redirectTo="/auth/signin">
+                  <ListMovies />
+                </PrivateRoute>
+              }
+            />
+            <Route path=":id" element={<Details />} />
+            <Route path="order/:id" element={<OrderPage />} />
+            <Route path="payment" element={<Payment />} />
+            <Route path="ticket-result" element={<TicketResult />} />
+          </Route>
+          <Route path="profile" element={<ProfilePage />} />
+          <Route path="admin" element={<AdminPage />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
     // </UserProvider>
   );
 }
