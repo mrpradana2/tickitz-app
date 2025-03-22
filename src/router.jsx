@@ -9,10 +9,12 @@ import OrderPage from "./pages/OrderPage";
 import TicketResult from "./pages/TicketResult";
 import Payment from "./pages/PaymentPage";
 import PrivateRoute from "./components/PrivateRoute";
-// import userProvider from "./contexts/userContext";
+// import UserProvider from "./contexts/userContext";
+import ProfilePage from "./pages/profile/ProfilePage";
 
 export default function Router() {
   return (
+    // <UserProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -29,12 +31,14 @@ export default function Router() {
               </PrivateRoute>
             }
           />
-          <Route path="details" element={<Details />} />
-          <Route path="order" element={<OrderPage />} />
+          <Route path=":id" element={<Details />} />
+          <Route path="order/:id" element={<OrderPage />} />
           <Route path="payment" element={<Payment />} />
           <Route path="ticket-result" element={<TicketResult />} />
         </Route>
+        <Route path="profile" element={<ProfilePage />} />
       </Routes>
     </BrowserRouter>
+    // </UserProvider>
   );
 }
