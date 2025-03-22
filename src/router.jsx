@@ -8,6 +8,7 @@ import Details from "./pages/movie/Details";
 import OrderPage from "./pages/OrderPage";
 import TicketResult from "./pages/TicketResult";
 import Payment from "./pages/PaymentPage";
+import AdminPage from "./pages/admin/AdminPage";
 import PrivateRoute from "./components/PrivateRoute";
 // import UserProvider from "./contexts/userContext";
 import ProfilePage from "./pages/profile/ProfilePage";
@@ -37,6 +38,7 @@ export default function Router() {
           <Route path="ticket-result" element={<TicketResult />} />
         </Route>
         <Route path="profile" element={<ProfilePage />} />
+        <Route path="admin" element={<AdminPage />} />
       </Routes>
     </BrowserRouter>
     // </UserProvider>
