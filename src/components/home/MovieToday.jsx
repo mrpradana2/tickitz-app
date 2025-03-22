@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import getMovieListNowPlaying from "../../api/getMovieListNowPlaying";
+import { Link } from "react-router";
 
 export default function MovieToday() {
   const [dataMovies, setDataMovies] = useState([]);
@@ -18,29 +19,36 @@ export default function MovieToday() {
         <div className="box-card">
           {/* card1 */}
           {dataMovies.map((movie) => (
-            <div className="card">
+            <div className="card" key={movie.id}>
               <div className="card-img-box group">
                 <img
                   src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
                   alt="thumbnail"
                 />
-                <button
-                  type="button"
-                  className="card-btn-details text-color-ligth group-hover:opacity-100 "
-                >
-                  Details
-                </button>
-                <button
-                  type="button"
-                  className="card-btn-ticket text-color-ligth bg-color-primary group-hover:opacity-100"
-                >
-                  Buy Ticket
-                </button>
+                <Link to={`/movie/${movie.id}`}>
+                  <button
+                    type="button"
+                    className="card-btn-details text-color-ligth group-hover:opacity-100 "
+                  >
+                    Details
+                  </button>
+                </Link>
+                <Link to={`/movie/order/${movie.id}`}>
+                  <button
+                    type="button"
+                    className="card-btn-ticket text-color-ligth bg-color-primary group-hover:opacity-100"
+                  >
+                    Buy Ticket
+                  </button>
+                </Link>
               </div>
               <h1 className="text-lg font-bold">{movie.title}</h1>
               <div className="flex gap-3 flex-wrap">
-                {movie.genres.map((genre) => (
-                  <div className="py-[3px] px-2 bg-color-ligthgrey w-max rounded-xl">
+                {movie.genres.map((genre, index) => (
+                  <div
+                    className="py-[3px] px-2 bg-color-ligthgrey w-max rounded-xl"
+                    key={index}
+                  >
                     <p className="text-sm text-color-dark">{genre}</p>
                   </div>
                 ))}

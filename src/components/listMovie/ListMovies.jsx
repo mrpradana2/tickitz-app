@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import getMovieListNowPlaying from "../../api/getMovieListNowPlaying";
+import { Link } from "react-router";
 
 export default function ListMovies() {
   const [dataMovies, setDataMovies] = useState([]);
@@ -108,12 +109,14 @@ export default function ListMovies() {
                     src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
                     alt="thumbnail"
                   />
-                  <button
-                    type="button"
-                    className="card-btn-details text-color-ligth group-hover:opacity-100 "
-                  >
-                    Details
-                  </button>
+                  <Link to={`/movie/${movie.id}`}>
+                    <button
+                      type="button"
+                      className="card-btn-details text-color-ligth group-hover:opacity-100 "
+                    >
+                      Details
+                    </button>
+                  </Link>
                   <button
                     type="button"
                     className="card-btn-ticket text-color-ligth bg-color-primary group-hover:opacity-100"
@@ -123,8 +126,11 @@ export default function ListMovies() {
                 </div>
                 <h1 className="text-lg font-bold">{movie.title}</h1>
                 <div className="flex gap-3 flex-wrap">
-                  {movie.genres.map((genre) => (
-                    <div className="py-[3px] px-2 bg-color-ligthgrey w-max rounded-xl">
+                  {movie.genres.map((genre, index) => (
+                    <div
+                      className="py-[3px] px-2 bg-color-ligthgrey w-max rounded-xl"
+                      key={index}
+                    >
                       <p className="text-sm text-color-dark">{genre}</p>
                     </div>
                   ))}
