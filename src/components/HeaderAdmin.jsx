@@ -4,20 +4,9 @@ import LogoTickitz2 from "/images/logo/Tickitz2.svg";
 import useLocalStorage from "../hooks/useLocalStorage";
 import Search from "/icons/icon-admin/Search.svg";
 import Photo from "/images/profile/photo-profile.png";
-import { useNavigate, Link } from "react-router";
+import { Link } from "react-router";
 
-export default function HeaderAdmin() {
-  const navigate = useNavigate();
-
-  const [user, setUser] = useLocalStorage("data:user", {});
-  function logOut() {
-    setUser({
-      email: "",
-      password: "",
-    });
-    navigate("/");
-  }
-
+export default function HeaderAdmin({ onClickNav1, onClickNav2, navigation }) {
   const [isOpen, setOpen] = useState(false);
   const [screenWidth, setScreenWIdth] = useState(window.innerWidth);
 
@@ -38,14 +27,6 @@ export default function HeaderAdmin() {
     if (!isOpen) setOpen(true);
   };
 
-  function goToSignIn() {
-    location.href = "/auth/signin";
-  }
-
-  function goToSignUp() {
-    location.href = "/auth/signup";
-  }
-
   return (
     <>
       <header className="header bg-color-ligth shadow-sm sticky lg:sticky top-0 z-50">
@@ -60,16 +41,24 @@ export default function HeaderAdmin() {
             isOpen ? "translate-x-0" : "-translate-x-full"
           } lg:translate-x-0`}
         >
-          <ul className="flex flex-col shadow-sm lg:flex-row lg:gap-8 lg:shadow-none">
-            <li className="h-12 text-center flex justify-center items-center">
-              <a href="/" className="w-full h-full inline-block pt-3">
-                Dashboard
-              </a>
+          <ul
+            className={`flex flex-col shadow-sm relative lg:flex-row lg:gap-8 lg:shadow-none lg:after:content-[''] lg:after:absolute lg:after:bottom-0 lg:after:h-[4px] lg:after:rounded-lg lg:after:bg-blue-600 lg:after:transition-all lg:after:duration-100 lg:after:left-0 lg:after:w-[30px] ${
+              navigation
+                ? "lg:after:translate-x-[28px]"
+                : "lg:after:translate-x-[121px]"
+            }`}
+          >
+            <li
+              onClick={onClickNav1}
+              className="h-12 text-center flex justify-center items-center cursor-pointer"
+            >
+              <p className="w-full h-full inline-block pt-3">Dashboard</p>
             </li>
-            <li className="h-12 text-center flex justify-center items-center">
-              <a href="/movie" className="w-full h-full inline-block pt-3">
-                Movie
-              </a>
+            <li
+              onClick={onClickNav2}
+              className="h-12 text-center flex justify-center items-center cursor-pointer"
+            >
+              <p className="w-full h-full inline-block pt-3">Movie</p>
             </li>
           </ul>
         </nav>
