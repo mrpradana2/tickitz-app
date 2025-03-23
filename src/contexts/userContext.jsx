@@ -11,7 +11,7 @@ export const userContext = createContext({
   setUser: () => {},
 });
 
-export default function userProvider({ childern }) {
+export default function userProvider({ children }) {
   const [user, setUser] = useLocalStorage("account:user", initialUser);
   return (
     <userContext.Provider
@@ -20,7 +20,7 @@ export default function userProvider({ childern }) {
         setUser,
       }}
     >
-      {childern}
+      {children}
     </userContext.Provider>
   );
 }
