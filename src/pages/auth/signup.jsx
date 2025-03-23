@@ -3,21 +3,46 @@ import LayoutAuth from "../../layouts/LayoutAuth";
 import Eye from "/icons/icon-auth/eye.svg";
 import Google from "/icons/icon-auth/icons-google.svg";
 import Facebook from "/icons/icon-auth/icons-fb.svg";
+import { validationEmail, validationPassword } from "../../hooks/validation.js";
 
 export default function Signup() {
-  const [_, setUser] = useState({
-    email: "",
-    password: "",
-  });
+  // const [_, setUser] = useState({
+  //   email: "",
+  //   password: "",
+  // });
+
+  // function submitHandler(e) {
+  //   e.preventDefault();
+  //   const email = e.target.email.value;
+  //   const password = e.target.password.value;
+  //   setUser({ email, password });
+  //   localStorage.setItem("data:user", JSON.stringify({ email, password }));
+  // }
+
+  const [openEye, setOpenEye] = useState(false);
+  function handlerOpenEye() {
+    openEye ? setOpenEye(false) : setOpenEye(true);
+  }
+
+  const [emailCheck, emailSetCheck] = useState(null);
+  const [passwordCheck, passwordSetCheck] = useState(null);
+  const [messagePassword, setMessagePassword] = useState(null);
+  const [messageEmail, setMessageEmail] = useState(null);
 
   function submitHandler(e) {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    setUser({ email, password });
-    localStorage.setItem("data:user", JSON.stringify({ email, password }));
+    const { resultEmail, messageEmail } = validationEmail(email);
+    const { resultPassword, messagePassword } = validationPassword(password);
+    emailSetCheck(resultEmail);
+    setMessageEmail(messageEmail);
+    passwordSetCheck(resultPassword);
+    setMessagePassword(messagePassword);
+    if (resultEmail === true && resultPassword === true) {
+      location.href = "/auth/signin";
+    }
   }
-
   return (
     <LayoutAuth
       content={
@@ -48,31 +73,70 @@ export default function Signup() {
                 Email
               </label>
               <input
-                type="email"
+                type="text"
                 name="email"
                 id="email"
-                className="input"
+                className={`input ${
+                  emailCheck === true
+                    ? "border-green-500"
+                    : emailCheck === null
+                    ? "border-slate-400"
+                    : "border-red-600"
+                }`}
                 placeholder="Write your email"
               />
+              <p
+                className={`${
+                  emailCheck === true
+                    ? "hidden"
+                    : emailCheck === null
+                    ? "hidden"
+                    : "block"
+                } text-red-600`}
+              >
+                {messageEmail}
+              </p>
             </div>
-            <div className="flex flex-col gap-2 mb-4 relative">
+            <div className="flex flex-col gap-2 relative">
               <label htmlFor="password" className="label">
                 Password
               </label>
               <input
-                type="password"
+                type={`${openEye ? "text" : "password"}`}
                 name="password"
                 id="password"
-                className="input pr-8"
+                className={`input pr-8 ${
+                  passwordCheck === true
+                    ? "border-green-500"
+                    : emailCheck === null
+                    ? "border-slate-400"
+                    : "border-red-600"
+                }`}
                 placeholder="Write your password"
               />
               <img
-                src={Eye}
+                src={`${
+                  openEye
+                    ? "../../../public/icons/icon-auth/eye-off.svg"
+                    : "../../../public/icons/icon-auth/eye.svg"
+                }`}
                 alt="icon-eye"
                 className="w-5 absolute bottom-2.5 right-2"
+                onClick={handlerOpenEye}
               />
             </div>
-            <div className="flex gap-2 items-center">
+            <p
+              className={`mb-4 ${
+                passwordCheck === true
+                  ? "hidden"
+                  : emailCheck === null
+                  ? "hidden"
+                  : "block"
+              } text-red-600`}
+            >
+              {messagePassword}
+            </p>
+            <div className="flex gap-2 items-center mt-2">
               <input
                 type="checkbox"
                 name="termcondition"
