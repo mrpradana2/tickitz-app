@@ -3,11 +3,16 @@ import Delete from "/icons/icon-admin/Delete.svg";
 import Edit from "/icons/icon-admin/Edit.svg";
 import Eye from "/icons/icon-admin/Eye.svg";
 import Hero from "/images/hero/hero-3.png";
+import { Link } from "react-router";
 
-export default function MovieListAdmin() {
+export default function MovieListAdmin({ navigation }) {
   return (
     <>
-      <section className="w-[90%] my-8 p-8 mx-auto bg-white flex flex-col gap-4">
+      <section
+        className={`${
+          navigation ? "hidden" : "flex"
+        } w-[90%] my-8 p-8 mx-auto bg-white flex-col gap-4`}
+      >
         <div className="flex justify-between items-center flex-wrap gap-4">
           <h1 className="text-xl font-bold">List Movie</h1>
           <div className="flex gap-3">
@@ -17,12 +22,14 @@ export default function MovieListAdmin() {
               id="date"
               className="bg-slate-200 py-3 px-2 rounded-lg cursor-pointer"
             />
-            <button
-              type="button"
-              className="bg-color-primary text-white py-3 px-2 rounded-lg active:scale-[0.97] cursor-pointer"
-            >
-              Add Movies
-            </button>
+            <Link to={"/admin/add-movie"}>
+              <button
+                type="button"
+                className="bg-color-primary text-white py-3 px-2 rounded-lg active:scale-[0.97] cursor-pointer"
+              >
+                Add Movies
+              </button>
+            </Link>
           </div>
         </div>
         <div className="overflow-scroll">
