@@ -3,6 +3,7 @@ import LogoTickitz from "/images/logo/logo-Tickitz.svg";
 import LogoTickitz2 from "/images/logo/Tickitz2.svg";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { useNavigate, Link } from "react-router";
+import Photo from "/images/profile/photo-profile.png";
 // import { userContext } from "../contexts/userContext";
 
 export default function Header() {
@@ -84,13 +85,20 @@ export default function Header() {
           } lg:static lg:translate-x-0 lg:mr-8 lg:shadow-none lg:bg-transparent`}
         >
           {user.email && user.password ? (
-            <button
-              type="button"
-              className="button-md bg-color-ligth text-color-primary border-primary"
-              onClick={logOut}
-            >
-              LogOut
-            </button>
+            <>
+              <button
+                type="button"
+                className="button-md bg-color-ligth text-color-primary border-primary"
+                onClick={logOut}
+              >
+                LogOut
+              </button>
+              <Link to={"/profile"}>
+                <div className="w-12 h-12 overflow-hidden rounded-full border-2 border-slate-600 cursor-pointer">
+                  <img src={Photo} alt="PhotoProfile" className="scale-200" />
+                </div>
+              </Link>
+            </>
           ) : (
             <>
               <Link to={"/auth/login"}>
