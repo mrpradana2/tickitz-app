@@ -6,32 +6,33 @@ import { fetchMovieUpcoming } from "../../redux/slices/fetchMovieUpcoming.js";
 import { Link } from "react-router";
 
 export default function UpcomingMovie() {
-  const [dataMovies, setDataMovies] = useState([]);
-
-  useEffect(() => {
-    getMovieListUpcoming().then((movieList) => setDataMovies(movieList));
-  }, []);
-  // const dispatch = useDispatch();
-  // const {
-  //   item: movies,
-  //   isLoading,
-  //   isError,
-  //   error,
-  // } = useSelector((state) => state.dataMovieUpcoming);
+  // const [dataMovies, setDataMovies] = useState([]);
 
   // useEffect(() => {
-  //   dispatch(fetchMovieUpcoming());
-  // }, [dispatch]);
+  //   getMovieListUpcoming().then((movieList) => setDataMovies(movieList));
+  // }, []);
 
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
+  const dispatch = useDispatch();
+  const {
+    item: dataMovies,
+    isLoading,
+    isError,
+    error,
+  } = useSelector((state) => state.dataMovieUpcoming);
 
-  // if (isError) {
-  //   return <div>Error: {error}</div>;
-  // }
+  useEffect(() => {
+    dispatch(fetchMovieUpcoming());
+  }, [dispatch]);
 
-  // console.log(movies);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error: {error}</div>;
+  }
+
+  console.log(dataMovies);
 
   return (
     <>

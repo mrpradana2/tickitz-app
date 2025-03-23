@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 const VITE_AUTH = import.meta.env.VITE_AUTH;
 const VITE_URL_UPCOMING = import.meta.env.VITE_URL_UPCOMING;
-import getGenreMovies from "../../api/getGenreMovie.js";
+import getGenreMoviesUpcoming from "../../api/getGenreMovieUpcoming.js";
 
 const options = {
   method: "GET",
@@ -20,7 +20,7 @@ export const fetchMovieUpcoming = createAsyncThunk(
 
       const dataMovies = await response.json();
       const dataListMovies = dataMovies.results;
-      const genres = await getGenreMovies();
+      const genres = await getGenreMoviesUpcoming();
 
       const newData = dataListMovies.map((movie) => {
         const movieGenres = genres.find((genre) => genre.title === movie.title);
