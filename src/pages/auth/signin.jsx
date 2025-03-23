@@ -1,11 +1,11 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import LayoutAuth from "../../layouts/LayoutAuth";
-import Eye from "/icons/icon-auth/eye.svg";
 import Google from "/icons/icon-auth/icons-google.svg";
 import Facebook from "/icons/icon-auth/icons-fb.svg";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { useNavigate } from "react-router";
 // import { userContext } from "../../contexts/userContext";
+import { validationEmail, validationPassword } from "../../hooks/validation.js";
 
 export default function Signin() {
   const navigate = useNavigate();
@@ -22,19 +22,44 @@ export default function Signin() {
     })();
   }, [user]);
 
+  // function submitHandler(e) {
+  //   e.preventDefault();
+  //   const form = new FormData();
+  //   const email = e.target.email.value;
+  //   const password = e.target.password.value;
+  //   form.append("email", email);
+  //   form.append("password", password);
+  //   const submittedUser = {};
+  //   form.forEach((value, key) => {
+  //     Object.assign(submittedUser, { [key]: value });
+  //   });
+  //   console.log(submittedUser);
+  //   setUser(submittedUser);
+  // }
+
+  const [openEye, setOpenEye] = useState(false);
+  function handlerOpenEye() {
+    openEye ? setOpenEye(false) : setOpenEye(true);
+  }
+
+  const [emailCheck, emailSetCheck] = useState(null);
+  const [passwordCheck, passwordSetCheck] = useState(null);
+  const [messagePassword, setMessagePassword] = useState(null);
+  const [messageEmail, setMessageEmail] = useState(null);
+
   function submitHandler(e) {
     e.preventDefault();
-    const form = new FormData();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    form.append("email", email);
-    form.append("password", password);
-    const submittedUser = {};
-    form.forEach((value, key) => {
-      Object.assign(submittedUser, { [key]: value });
-    });
-    console.log(submittedUser);
-    setUser(submittedUser);
+    const { resultEmail, messageEmail } = validationEmail(email);
+    const { resultPassword, messagePassword } = validationPassword(password);
+    emailSetCheck(resultEmail);
+    setMessageEmail(messageEmail);
+    passwordSetCheck(resultPassword);
+    setMessagePassword(messagePassword);
+    if (resultEmail === true && resultPassword === true) {
+      setUser({ email, password });
+    }
   }
 
   return (
@@ -51,33 +76,72 @@ export default function Signin() {
                 Email
               </label>
               <input
-                type="email"
+                type="text"
                 name="email"
                 id="email"
-                className="input"
+                className={`input ${
+                  emailCheck === true
+                    ? "border-green-500"
+                    : emailCheck === null
+                    ? "border-slate-400"
+                    : "border-red-600"
+                }`}
                 placeholder="Write your email"
               />
+              <p
+                className={`${
+                  emailCheck === true
+                    ? "hidden"
+                    : emailCheck === null
+                    ? "hidden"
+                    : "block"
+                } text-red-600`}
+              >
+                {messageEmail}
+              </p>
             </div>
-            <div className="flex flex-col gap-2 mb-4 relative">
+            <div className="flex flex-col gap-2 relative">
               <label htmlFor="password" className="label">
                 Password
               </label>
               <input
-                type="password"
+                type={`${openEye ? "text" : "password"}`}
                 name="password"
                 id="password"
-                className="input pr-8"
+                className={`input pr-8 ${
+                  passwordCheck === true
+                    ? "border-green-500"
+                    : emailCheck === null
+                    ? "border-slate-400"
+                    : "border-red-600"
+                }`}
                 placeholder="Write your password"
               />
               <img
-                src={Eye}
+                src={`${
+                  openEye
+                    ? "../../../public/icons/icon-auth/eye-off.svg"
+                    : "../../../public/icons/icon-auth/eye.svg"
+                }`}
                 alt="icon-eye"
-                className="w-5 absolute bottom-2.5 right-2"
+                className="w-5 absolute bottom-2.5 right-2 cursor-pointer"
+                onClick={handlerOpenEye}
               />
             </div>
+            <p
+              className={`${
+                passwordCheck === true
+                  ? "hidden"
+                  : emailCheck === null
+                  ? "hidden"
+                  : "block"
+              } text-red-600`}
+            >
+              {messagePassword}
+            </p>
             <a
               href="#"
-              className="block text-right text-color-primary text-sm hover:underline"
+              className="block text-right text-color-primary text-sm mt-3 hover:underline"
             >
               Forgot your password?
             </a>
