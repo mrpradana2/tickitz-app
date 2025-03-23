@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import Signin from "./pages/auth/signin";
 import Signup from "./pages/auth/signup";
 import Home from "./pages/Home";
@@ -20,12 +20,12 @@ import store from "./redux/store";
 
 export default function Router() {
   return (
-    // <UserProvider>
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="auth">
+          <Route path="/auth">
+            <Route index element={<Navigate to="/auth/signin" replace />} />
             <Route path="signin" element={<Signin />} />
             <Route path="signup" element={<Signup />} />
           </Route>
@@ -45,13 +45,11 @@ export default function Router() {
           </Route>
           <Route path="profile" element={<ProfilePage />} />
           <Route path="admin">
-            {/* <Route index element={<DashboardAdmin />} /> */}
             <Route index element={<AdminPage />} />
             <Route path="add-movie" element={<AddMovie />} />
           </Route>
         </Routes>
       </BrowserRouter>
     </Provider>
-    // </UserProvider>
   );
 }
