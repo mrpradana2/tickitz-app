@@ -12,6 +12,8 @@ import AdminPage from "./pages/admin/AdminPage";
 import PrivateRoute from "./components/PrivateRoute";
 // import UserProvider from "./contexts/userContext";
 import ProfilePage from "./pages/profile/ProfilePage";
+import AddMovie from "./pages/admin/AddMovie";
+import DashboardAdmin from "./pages/admin/DashboardAdmin";
 
 import { Provider } from "react-redux";
 import store from "./redux/store";
@@ -42,7 +44,11 @@ export default function Router() {
             <Route path="ticket-result" element={<TicketResult />} />
           </Route>
           <Route path="profile" element={<ProfilePage />} />
-          <Route path="admin" element={<AdminPage />} />
+          <Route path="admin">
+            {/* <Route index element={<DashboardAdmin />} /> */}
+            <Route index element={<AdminPage />} />
+            <Route path="add-movie" element={<AddMovie />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </Provider>
