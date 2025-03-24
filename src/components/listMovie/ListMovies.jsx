@@ -139,12 +139,14 @@ export default function ListMovies() {
                       Details
                     </button>
                   </Link>
-                  <button
-                    type="button"
-                    className="card-btn-ticket text-color-ligth bg-color-primary group-hover:opacity-100"
-                  >
-                    Buy Ticket
-                  </button>
+                  <Link to={`/movie/order/${movie.id}`}>
+                    <button
+                      type="button"
+                      className="card-btn-ticket text-color-ligth bg-color-primary group-hover:opacity-100"
+                    >
+                      Buy Ticket
+                    </button>
+                  </Link>
                 </div>
                 <h1 className="text-lg font-bold">{movie.title}</h1>
                 <div className="flex gap-3 flex-wrap">
