@@ -37,15 +37,14 @@ export default function Description() {
           <h1 className="font-bold text-xl text-center relative bottom-10 col-span-2 md:bottom-0 md:text-3xl md:pt-5 md:text-left">
             {detailsMovie.title}
           </h1>
-          <div className="flex gap-4 justify-center relative bottom-5 col-span-2 md:bottom-0 md:py-4 md:justify-start">
-            {/* {detailsMovie.genres.map((genre) => (
-              <p className="px-2 py-1 bg-color-ligthgrey text-slate-600 rounded-2xl text-[13px] md:h-max">
-                {genre.id}
-              </p>
-            ))} */}
-            {/* <p className="px-2 py-1 bg-color-ligthgrey text-slate-600 rounded-2xl text-[13px] md:h-max">
-              {detailsMovie.genres}
-            </p> */}
+          <div className="flex px-8 gap-4 flex-wrap justify-center relative bottom-5 col-span-2 md:bottom-0 md:py-4 md:justify-start">
+            {detailsMovie.genres === undefined
+              ? false
+              : detailsMovie.genres.map((genre) => (
+                  <p className="px-2 py-1 bg-color-ligthgrey text-slate-600 rounded-2xl text-[13px] md:h-max">
+                    {genre.name}
+                  </p>
+                ))}
           </div>
           <div className="px-4 py-2 min-[440px]:px-8 min-[550px]:px-14 min-[770px]:px-22 md:px-0 md:py-0">
             <h6 className="text-color-grey text-[15px]">Release Date</h6>
