@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import Hero from "/images/hero/hero-3.png";
+import React, { useState, useEffect } from "react";
 import Seat from "./Seat";
 import Logo from "/images/sponsor/CineOne21.svg";
-import { useParams } from "react-router";
+import { useParams, Link } from "react-router";
+const VITE_AUTH = import.meta.env.VITE_AUTH;
 
 function OrderPage() {
   const [openModal, setOpenModal] = useState(false);
@@ -37,15 +37,20 @@ function OrderPage() {
           <div className="p-8 place-self-center w-full">
             <div className="border-2 border-slate-300 p-2 flex flex-col gap-4 items-center max-w-[525px] mx-auto lg:grid lg:grid-cols-4 lg:grid-rows-3 lg:gap-y-0">
               <div className="aspect-video w-full bg-amber-200 overflow-hidden rounded-lg lg:row-span-3 lg:aspect-[4/3]">
-                <img src={Hero} alt="images" />
+                <img
+                  src={`https://image.tmdb.org/t/p/w500/${detailsMovie.poster_path}`}
+                  alt="images"
+                />
               </div>
               <h1 className="text-xl font-bold text-center lg:col-start-2 lg:col-end-4 lg:text-sm lg:text-left">
-                Spider-Man: Homecoming
+                {detailsMovie.title}
               </h1>
-              <div className="flex flex-wrap justify-between gap-4 w-full max-w-[300px] lg:row-start-2 lg:col-start-2 lg:col-end-4 lg:items-start lg:flex-wrap">
-                <p className="px-3 py-1 bg-slate-300 text-slate-600 text-sm rounded-[50px]">
-                  action
-                </p>
+              <div className="flex flex-wrap justify-center gap-4 w-full max-w-[300px] lg:row-start-2 lg:col-start-2 lg:col-end-4 lg:items-start lg:flex-wrap">
+                {/* {detailsMovie.genres.map((genre) => (
+                  <p className="px-3 py-1 bg-slate-300 text-slate-600 text-sm rounded-[50px]">
+                    {genre}
+                  </p>
+                ))} */}
                 <p className="px-3 py-1 bg-slate-300 text-slate-600 text-sm rounded-[50px]">
                   action
                 </p>
@@ -56,12 +61,14 @@ function OrderPage() {
               <p className="text-black text-center font-medium lg:row-start-3 lg:col-start-2 lg:col-end-4 lg:text-left lg:text-sm">
                 Regular - 13:00 PM
               </p>
-              <button
-                type="button"
-                className="bg-slate-300 px-3 py-1 rounded-[50px] w-max cursor-pointer active:scale-[0.97] lg:col-start-4 lg:row-start-3 lg:bg-blue-600 lg:text-white lg:rounded-md lg:place-self-center"
-              >
-                Change
-              </button>
+              <Link to="/movie" className="lg:col-start-4 lg:row-start-3">
+                <button
+                  type="button"
+                  className="bg-slate-300 px-3 py-1 rounded-[50px] w-max cursor-pointer active:scale-[0.97] lg:col-start-4 lg:row-start-3 lg:bg-blue-600 lg:text-white lg:rounded-md lg:place-self-center"
+                >
+                  Change
+                </button>
+              </Link>
             </div>
           </div>
           <div className="overflow-scroll">
@@ -351,12 +358,14 @@ function OrderPage() {
                 $30
               </p>
             </div>
-            <button
-              type="submit"
-              className="button-lg bg-color-primary text-white font-semibold active:scale-[0.97]"
-            >
-              Confirm Order
-            </button>
+            <Link to="/movie/payment" className="w-full">
+              <button
+                type="submit"
+                className="button-lg w-full bg-color-primary text-white font-semibold active:scale-[0.97]"
+              >
+                Confirm Order
+              </button>
+            </Link>
           </div>
         </section>
       </div>

@@ -7,6 +7,7 @@ import Dana from "/images/img-payment/Logo-DANA.svg";
 import BCA from "/images/img-payment/logo-Bank-BCA.svg";
 import BRI from "/images/img-payment/logo-Bank-BRI.svg";
 import Ovo from "/images/img-payment/logo-ovo.svg";
+import { Link } from "react-router";
 
 function PaymentForm() {
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -250,13 +251,15 @@ function PaymentForm() {
                 If the bill has not been paid by the specified time, it will be
                 forfeited
               </p>
-              <button
-                type="submit"
-                onSubmit={SubmitHandler}
-                className="button-md bg-color-primary text-color-ligth text-xl font-bold py-4 shadow-lg active:scale-[0.97]"
-              >
-                Check Payment
-              </button>
+              <Link to="/movie/ticket-result">
+                <button
+                  type="submit"
+                  onSubmit={SubmitHandler}
+                  className="button-md w-full bg-color-primary text-color-ligth text-xl font-bold py-4 shadow-lg active:scale-[0.97]"
+                >
+                  Check Payment
+                </button>
+              </Link>
               <p
                 onClick={modalHandler}
                 className="text-center text-xl text-color-primary font-bold cursor-pointer"
