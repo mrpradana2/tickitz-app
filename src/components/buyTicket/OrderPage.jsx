@@ -42,10 +42,10 @@ function OrderPage() {
                   alt="images"
                 />
               </div>
-              <h1 className="text-xl font-bold text-center lg:col-start-2 lg:col-end-4 lg:text-sm lg:text-left">
+              <h1 className="text-xl font-bold text-center lg:col-start-2 lg:col-end-5 lg:text-sm lg:text-left">
                 {detailsMovie.title}
               </h1>
-              <div className="flex flex-wrap justify-center gap-4 w-full max-w-[300px] lg:row-start-2 lg:col-start-2 lg:col-end-4 lg:items-start lg:flex-wrap">
+              <div className="flex flex-wrap justify-center gap-4 w-full max-w-[300px] lg:row-start-2 lg:col-start-2 lg:col-end-5 lg:items-start lg:w-full lg:flex-wrap">
                 {detailsMovie.genres === undefined
                   ? false
                   : detailsMovie.genres.map((genre) => (
@@ -53,12 +53,6 @@ function OrderPage() {
                         {genre.name}
                       </p>
                     ))}
-                <p className="px-3 py-1 bg-slate-300 text-slate-600 text-sm rounded-[50px]">
-                  action
-                </p>
-                <p className="px-3 py-1 bg-slate-300 text-slate-600 text-sm rounded-[50px]">
-                  action
-                </p>
               </div>
               <p className="text-black text-center font-medium lg:row-start-3 lg:col-start-2 lg:col-end-4 lg:text-left lg:text-sm">
                 Regular - 13:00 PM
