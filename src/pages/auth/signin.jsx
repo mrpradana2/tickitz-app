@@ -87,6 +87,7 @@ export default function Signin() {
                     : "border-red-600"
                 }`}
                 placeholder="Write your email"
+                autoComplete="off"
               />
               <p
                 className={`${
