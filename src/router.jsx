@@ -10,11 +10,8 @@ import TicketResult from "./pages/TicketResult";
 import Payment from "./pages/PaymentPage";
 import AdminPage from "./pages/admin/AdminPage";
 import PrivateRoute from "./components/PrivateRoute";
-// import UserProvider from "./contexts/userContext";
 import ProfilePage from "./pages/profile/ProfilePage";
 import AddMovie from "./pages/admin/AddMovie";
-import DashboardAdmin from "./pages/admin/DashboardAdmin";
-
 import { Provider } from "react-redux";
 import store from "./redux/store";
 
@@ -38,12 +35,40 @@ export default function Router() {
                 </PrivateRoute>
               }
             />
-            <Route path=":id" element={<Details />} />
+            <Route
+              path=":id"
+              element={
+                <PrivateRoute redirectTo="/auth/signin">
+                  <Details />
+                </PrivateRoute>
+              }
+            />
             <Route path="order/:id" element={<OrderPage />} />
-            <Route path="payment" element={<Payment />} />
-            <Route path="ticket-result" element={<TicketResult />} />
+            <Route
+              path="payment"
+              element={
+                <PrivateRoute redirectTo="/auth/signin">
+                  <Payment />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="ticket-result"
+              element={
+                <PrivateRoute redirectTo="/auth/signin">
+                  <TicketResult />
+                </PrivateRoute>
+              }
+            />
           </Route>
-          <Route path="profile" element={<ProfilePage />} />
+          <Route
+            path="profile"
+            element={
+              <PrivateRoute redirectTo="/auth/signin">
+                <ProfilePage />
+              </PrivateRoute>
+            }
+          />
           <Route path="admin">
             <Route index element={<AdminPage />} />
             <Route path="add-movie" element={<AddMovie />} />
