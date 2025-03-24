@@ -46,11 +46,13 @@ function OrderPage() {
                 {detailsMovie.title}
               </h1>
               <div className="flex flex-wrap justify-center gap-4 w-full max-w-[300px] lg:row-start-2 lg:col-start-2 lg:col-end-4 lg:items-start lg:flex-wrap">
-                {/* {detailsMovie.genres.map((genre) => (
-                  <p className="px-3 py-1 bg-slate-300 text-slate-600 text-sm rounded-[50px]">
-                    {genre}
-                  </p>
-                ))} */}
+                {detailsMovie.genres === undefined
+                  ? false
+                  : detailsMovie.genres.map((genre) => (
+                      <p className="px-3 py-1 bg-slate-300 text-slate-600 text-sm rounded-[50px]">
+                        {genre.name}
+                      </p>
+                    ))}
                 <p className="px-3 py-1 bg-slate-300 text-slate-600 text-sm rounded-[50px]">
                   action
                 </p>
