@@ -1,24 +1,13 @@
 import { useState } from "react";
 import LayoutAuth from "../../layouts/LayoutAuth";
-import Eye from "/icons/icon-auth/eye.svg";
 import Google from "/icons/icon-auth/icons-google.svg";
 import Facebook from "/icons/icon-auth/icons-fb.svg";
 import { validationEmail, validationPassword } from "../../hooks/validation.js";
+import { useDispatch } from "react-redux";
+import { addUser, removeAll } from "../../redux/slices/auth.js";
 
 export default function Signup() {
-  // const [_, setUser] = useState({
-  //   email: "",
-  //   password: "",
-  // });
-
-  // function submitHandler(e) {
-  //   e.preventDefault();
-  //   const email = e.target.email.value;
-  //   const password = e.target.password.value;
-  //   setUser({ email, password });
-  //   localStorage.setItem("data:user", JSON.stringify({ email, password }));
-  // }
-
+  const dispatch = useDispatch();
   const [openEye, setOpenEye] = useState(false);
   function handlerOpenEye() {
     openEye ? setOpenEye(false) : setOpenEye(true);
@@ -28,20 +17,28 @@ export default function Signup() {
   const [passwordCheck, passwordSetCheck] = useState(null);
   const [messagePassword, setMessagePassword] = useState(null);
   const [messageEmail, setMessageEmail] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   function submitHandler(e) {
     e.preventDefault();
+    setLoading(true);
     const email = e.target.email.value;
     const password = e.target.password.value;
     const { resultEmail, messageEmail } = validationEmail(email);
     const { resultPassword, messagePassword } = validationPassword(password);
-    emailSetCheck(resultEmail);
-    setMessageEmail(messageEmail);
-    passwordSetCheck(resultPassword);
-    setMessagePassword(messagePassword);
-    if (resultEmail === true && resultPassword === true) {
-      location.href = "/auth/signin";
-    }
+    const newUser = { email, password };
+    setTimeout(() => {
+      if (resultEmail === true && resultPassword === true) {
+        dispatch(addUser(newUser));
+        location.href = "/auth/signin";
+      }
+
+      emailSetCheck(resultEmail);
+      setMessageEmail(messageEmail);
+      passwordSetCheck(resultPassword);
+      setMessagePassword(messagePassword);
+      setLoading(false);
+    }, 3000);
   }
   return (
     <LayoutAuth
@@ -148,16 +145,29 @@ export default function Signup() {
                 I agree to terms & conditions
               </label>
             </div>
-            <button
-              type="submit"
-              className="button-lg bg-color-primary text-color-ligth my-4"
-            >
-              Login
-            </button>
+            {loading ? (
+              <button
+                type="submit"
+                className="button-lg bg-color-primary text-color-ligth my-4 flex gap-2   justify-center"
+              >
+                <p className="text-white">Loading</p>
+                <div className="loader"></div>
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="button-lg bg-color-primary text-color-ligth my-4 h-[46px]"
+              >
+                Login
+              </button>
+            )}
           </form>
           <p className="text-sm text-color-grey text-center mt-4">
             Already have an account?
-            <a href="#" className="text-sm text-color-primary hover:underline">
+            <a
+              href="/auth/signin"
+              className="text-sm text-color-primary hover:underline"
+            >
               Log In
             </a>
           </p>
@@ -166,13 +176,14 @@ export default function Signup() {
           </p>
           <div className="flex gap-4 justify-center">
             <button
-              type="button"
+              type="submit"
               className="p-4 w-max shadow-lg flex justify-center items-center gap-3 border border-slate-200 cursor-pointer transition-all duration-100 hover:scale-[1.03] active:scale-100"
             >
               <img src={Google} alt="icon" />
               <p className="text-sm  text-color-grey hidden md:block">Google</p>
             </button>
             <button
+              onClick={() => dispatch(removeAll())}
               type="button"
               className="p-4 w-max shadow-lg flex justify-center items-center gap-3 border border-slate-200 cursor-pointer transition-all duration-100 hover:scale-[1.03] active:scale-100"
             >
