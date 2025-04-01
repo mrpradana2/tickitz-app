@@ -1,11 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import dataReducer from "./slices/fetchData";
+import reducer from "./slices/index";
+import { persistStore } from "redux-persist";
 
-const store = configureStore({
-  reducer: {
-    data: dataReducer,
-    dataMovieUpcoming: dataReducer,
-  },
+export const store = configureStore({
+  reducer,
 });
 
-export default store;
+export const persistor = persistStore(store);
