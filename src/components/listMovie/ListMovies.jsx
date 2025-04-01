@@ -1,37 +1,13 @@
 import React, { useEffect, useState } from "react";
 import getMovieListNowPlaying from "../../api/getMovieListNowPlaying";
 import { Link } from "react-router";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchData } from "../../redux/slices/fetchData";
 
 export default function ListMovies() {
-  // const [dataMovies, setDataMovies] = useState([]);
-
-  // useEffect(() => {
-  //   getMovieListNowPlaying().then((movieList) => setDataMovies(movieList));
-  // }, []);
-
-  const dispatch = useDispatch();
-  const {
-    item: movies,
-    isLoading,
-    isError,
-    error,
-  } = useSelector((state) => state.data);
+  const [dataMovies, setDataMovies] = useState([]);
 
   useEffect(() => {
-    dispatch(fetchData());
-  }, [dispatch]);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError) {
-    return <div>Error: {error}</div>;
-  }
-
-  // console.log(dataMovies);
+    getMovieListNowPlaying().then((movieList) => setDataMovies(movieList));
+  }, []);
 
   return (
     <>
@@ -124,7 +100,7 @@ export default function ListMovies() {
           </div>
           <div className="grid grid-cols-1 place-self-center gap-12 min-[670px]:grid-cols-2 min-[940px]:grid-cols-3 min-[1180px]:grid-cols-4 lg:col-span-4">
             {/* card1 */}
-            {movies.map((movie) => (
+            {dataMovies.map((movie) => (
               <div className="card" key={movie.id}>
                 <div className="card-img-box group">
                   <img

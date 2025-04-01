@@ -1,38 +1,14 @@
 import { useState, useEffect } from "react";
 import ArrowUp from "/icons/icon-home/arrow-up.svg";
 import getMovieListUpcoming from "../../api/getMovieListUpcoming";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchMovieUpcoming } from "../../redux/slices/fetchMovieUpcoming.js";
 import { Link } from "react-router";
 
 export default function UpcomingMovie() {
-  // const [dataMovies, setDataMovies] = useState([]);
-
-  // useEffect(() => {
-  //   getMovieListUpcoming().then((movieList) => setDataMovies(movieList));
-  // }, []);
-
-  const dispatch = useDispatch();
-  const {
-    item: dataMovies,
-    isLoading,
-    isError,
-    error,
-  } = useSelector((state) => state.dataMovieUpcoming);
+  const [dataMovies, setDataMovies] = useState([]);
 
   useEffect(() => {
-    dispatch(fetchMovieUpcoming());
-  }, [dispatch]);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError) {
-    return <div>Error: {error}</div>;
-  }
-
-  console.log(dataMovies);
+    getMovieListUpcoming().then((movieList) => setDataMovies(movieList));
+  }, []);
 
   return (
     <>
