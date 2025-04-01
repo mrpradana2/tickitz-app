@@ -13,68 +13,71 @@ import PrivateRoute from "./components/PrivateRoute";
 import ProfilePage from "./pages/profile/ProfilePage";
 import AddMovie from "./pages/admin/AddMovie";
 import { Provider } from "react-redux";
-import store from "./redux/store";
+import { store, persistor } from "./redux/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 export default function Router() {
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/auth">
-            <Route index element={<Navigate to="/auth/signin" replace />} />
-            <Route path="signin" element={<Signin />} />
-            <Route path="signup" element={<Signup />} />
-          </Route>
-          <Route path="movie">
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/auth">
+              <Route index element={<Navigate to="/auth/signin" replace />} />
+              <Route path="signin" element={<Signin />} />
+              <Route path="signup" element={<Signup />} />
+            </Route>
+            <Route path="movie">
+              <Route
+                index
+                element={
+                  <PrivateRoute redirectTo="/auth/signin">
+                    <ListMovies />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path=":id"
+                element={
+                  <PrivateRoute redirectTo="/auth/signin">
+                    <Details />
+                  </PrivateRoute>
+                }
+              />
+              <Route path="order/:id" element={<OrderPage />} />
+              <Route
+                path="payment"
+                element={
+                  <PrivateRoute redirectTo="/auth/signin">
+                    <Payment />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="ticket-result"
+                element={
+                  <PrivateRoute redirectTo="/auth/signin">
+                    <TicketResult />
+                  </PrivateRoute>
+                }
+              />
+            </Route>
             <Route
-              index
+              path="profile"
               element={
                 <PrivateRoute redirectTo="/auth/signin">
-                  <ListMovies />
+                  <ProfilePage />
                 </PrivateRoute>
               }
             />
-            <Route
-              path=":id"
-              element={
-                <PrivateRoute redirectTo="/auth/signin">
-                  <Details />
-                </PrivateRoute>
-              }
-            />
-            <Route path="order/:id" element={<OrderPage />} />
-            <Route
-              path="payment"
-              element={
-                <PrivateRoute redirectTo="/auth/signin">
-                  <Payment />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="ticket-result"
-              element={
-                <PrivateRoute redirectTo="/auth/signin">
-                  <TicketResult />
-                </PrivateRoute>
-              }
-            />
-          </Route>
-          <Route
-            path="profile"
-            element={
-              <PrivateRoute redirectTo="/auth/signin">
-                <ProfilePage />
-              </PrivateRoute>
-            }
-          />
-          <Route path="admin">
-            <Route index element={<AdminPage />} />
-            <Route path="add-movie" element={<AddMovie />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+            <Route path="admin">
+              <Route index element={<AdminPage />} />
+              <Route path="add-movie" element={<AddMovie />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </PersistGate>
     </Provider>
   );
 }
