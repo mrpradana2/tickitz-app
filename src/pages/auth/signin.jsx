@@ -1,41 +1,19 @@
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import LayoutAuth from "../../layouts/LayoutAuth";
 import Google from "/icons/icon-auth/icons-google.svg";
 import Facebook from "/icons/icon-auth/icons-fb.svg";
-import useLocalStorage from "../../hooks/useLocalStorage";
-import { useNavigate } from "react-router";
-// import { userContext } from "../../contexts/userContext";
+import { useNavigate, useLocation } from "react-router";
+import { useSelector, useDispatch } from "react-redux";
 import { validationEmail, validationPassword } from "../../hooks/validation.js";
+import { userLogin } from "../../redux/slices/userAuth.js";
 
 export default function Signin() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const [user, setUser] = useContext(userContext);
-  const [user, setUser] = useLocalStorage("data:user", {
-    email: "",
-    password: "",
-  });
-
-  useEffect(() => {
-    // IIFE
-    (function () {
-      if (user.email && user.password) navigate("/");
-    })();
-  }, [user]);
-
-  // function submitHandler(e) {
-  //   e.preventDefault();
-  //   const form = new FormData();
-  //   const email = e.target.email.value;
-  //   const password = e.target.password.value;
-  //   form.append("email", email);
-  //   form.append("password", password);
-  //   const submittedUser = {};
-  //   form.forEach((value, key) => {
-  //     Object.assign(submittedUser, { [key]: value });
-  //   });
-  //   console.log(submittedUser);
-  //   setUser(submittedUser);
-  // }
+  const location = useLocation();
+  const dataUsers = useSelector((state) => state.dataUsers.users);
+  const [errorLogin, setErrorLogin] = useState(false);
+  const from = location.state?.from?.pathname || "/";
 
   const [openEye, setOpenEye] = useState(false);
   function handlerOpenEye() {
@@ -58,7 +36,17 @@ export default function Signin() {
     passwordSetCheck(resultPassword);
     setMessagePassword(messagePassword);
     if (resultEmail === true && resultPassword === true) {
-      setUser({ email, password });
+      const result = dataUsers.find(
+        (user) => user.email === email && user.password === password
+      );
+
+      if (result !== undefined) {
+        setErrorLogin(false);
+        dispatch(userLogin(result));
+        navigate(from, { replace: true });
+      } else {
+        setErrorLogin(true);
+      }
     }
   }
 
@@ -70,6 +58,14 @@ export default function Signin() {
             <h1 className="text-2xl font-bold mb-4">Welcome Back👋</h1>
             <p className="text-color-grey text-sm mb-4">
               Sign in with your data that you entered during your registration
+            </p>
+            <p
+              className={`${
+                errorLogin === false ? "hidden" : "block"
+              } mb-4 text-sm text-red-600 font-semibold`}
+            >
+              User tidak ditemukan, harap periksa kembali email dan password
+              anda.
             </p>
             <div className="flex flex-col gap-2 mb-4">
               <label htmlFor="email" className="label">
