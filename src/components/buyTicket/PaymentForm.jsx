@@ -7,46 +7,83 @@ import Dana from "/images/img-payment/Logo-DANA.svg";
 import BCA from "/images/img-payment/logo-Bank-BCA.svg";
 import BRI from "/images/img-payment/logo-Bank-BRI.svg";
 import Ovo from "/images/img-payment/logo-ovo.svg";
-import { Link } from "react-router";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+import { userSelectCinema } from "../../redux/slices/dataUserCinema";
+import { addHistoryOrder } from "../../redux/slices/orderMovie";
 
 function PaymentForm() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isOpenModal, setIsOpenModal] = useState(false);
   function modalHandler() {
     isOpenModal ? setIsOpenModal(false) : setIsOpenModal(true);
   }
 
-  function SubmitHandler(e) {
+  const dataCinema = useSelector((state) => state.dataUserCinema.userCinema);
+  const dataUser = useSelector((state) => state.dataUserLogin.user);
+
+  const [paid, setPaid] = useState(null);
+  function paidHandler(result) {
+    setPaid(result);
+  }
+
+  function submitHandler(e) {
     e.preventDefault();
+    const name = e.target.fullName.value;
+    const receipentEmail = e.target.email.value;
+    const phoneNumber = e.target.phoneNumber.value;
+    const paymentMethod = e.target.paymentMethod.value;
+    const paidStatus = paid;
+    const newData = {
+      name,
+      receipentEmail,
+      phoneNumber,
+      paymentMethod,
+      paid: paidStatus,
+    };
+    dispatch(userSelectCinema({ ...dataCinema, ...newData }));
+    dispatch(
+      addHistoryOrder({
+        email: dataUser.email,
+        newOrder: { ...dataCinema, ...newData },
+      })
+    );
+    navigate("/movie/ticket-result");
   }
 
   return (
     <>
       <section className="flex justify-center items-center my-8">
-        <form onSubmit={SubmitHandler} className="flex justify-center">
+        <form onSubmit={submitHandler} className="flex justify-center">
           <div className="p-12 bg-white w-[80%] md:w-full max-w-2xl rounded-md">
             {/* Payment info */}
             <h1 className="text-2xl font-bold">Payment Info</h1>
             <div className="py-4 border-b border-slate-200">
               <h2 className="pb-2 text-slate-400 font-medium">DATE & TIME</h2>
-              <p>Tuesday, 07 July 2020 at 02:00pm</p>
+              <p>
+                {dataCinema.date} at {dataCinema.time}
+              </p>
             </div>
             <div className="py-4 border-b border-slate-200">
               <h2 className="pb-2 text-slate-400 font-medium">MOVIE TITLE</h2>
-              <p>Spider-Man: Homecoming</p>
+              <p>{dataCinema.title}</p>
             </div>
             <div className="py-4 border-b border-slate-200">
               <h2 className="pb-2 text-slate-400 font-medium">CINEMA NAME</h2>
-              <p>Cineone21 Cinema</p>
+              <p>{dataCinema.cinemaName}</p>
             </div>
             <div className="py-4 border-b border-slate-200">
               <h2 className="pb-2 text-slate-400 font-medium">
                 NUMBER OF TICKETS
               </h2>
-              <p>3 Pieces</p>
+              <p>{dataCinema.seat.length} Pieces</p>
             </div>
             <div className="py-4 border-b border-slate-200">
               <h2 className="pb-2 text-slate-400 font-medium">TOTAL PAYMENT</h2>
-              <p className="text-color-primary font-bold text-xl">$30.00</p>
+              <p className="text-color-primary font-bold text-xl">
+                $ {dataCinema.totalPrice}.00
+              </p>
             </div>
             {/* Personal Information */}
             <h1 className="text-2xl font-bold pt-4">Personal Information</h1>
@@ -59,9 +96,9 @@ function PaymentForm() {
               </label>
               <input
                 type="text"
-                id="full-name"
-                name="full-name"
-                value="Jonas El Rodriguez"
+                id="fullName"
+                name="fullName"
+                defaultValue="Jonas El Rodriguez"
                 className="input"
               />
             </div>
@@ -74,9 +111,9 @@ function PaymentForm() {
               </label>
               <input
                 type="text"
-                id="full-name"
-                name="full-name"
-                value="Jonasadri123@gmail.com"
+                id="email"
+                name="email"
+                defaultValue={dataUser.email}
                 className="input"
               />
             </div>
@@ -89,9 +126,9 @@ function PaymentForm() {
               </label>
               <input
                 type="text"
-                id="full-name"
-                name="full-name"
-                value="81445687121"
+                id="phoneNumber"
+                name="phoneNumber"
+                defaultValue="81445687121"
                 className="input"
               />
             </div>
@@ -100,8 +137,9 @@ function PaymentForm() {
               <div>
                 <input
                   type="radio"
-                  name="payment-method"
+                  name="paymentMethod"
                   id="g-pay"
+                  value="Google Pay"
                   className="peer hidden"
                 />
                 <label
@@ -114,8 +152,9 @@ function PaymentForm() {
               <div>
                 <input
                   type="radio"
-                  name="payment-method"
+                  name="paymentMethod"
                   id="visa"
+                  value="Visa"
                   className="peer hidden"
                 />
                 <label
@@ -128,8 +167,9 @@ function PaymentForm() {
               <div>
                 <input
                   type="radio"
-                  name="payment-method"
+                  name="paymentMethod"
                   id="gopay"
+                  value="Gopay"
                   className="peer hidden"
                 />
                 <label
@@ -142,8 +182,9 @@ function PaymentForm() {
               <div>
                 <input
                   type="radio"
-                  name="payment-method"
+                  name="paymentMethod"
                   id="paypal"
+                  value="Paypal"
                   className="peer hidden"
                 />
                 <label
@@ -156,8 +197,9 @@ function PaymentForm() {
               <div>
                 <input
                   type="radio"
-                  name="payment-method"
+                  name="paymentMethod"
                   id="dana"
+                  value="Dana"
                   className="peer hidden"
                 />
                 <label
@@ -170,8 +212,9 @@ function PaymentForm() {
               <div>
                 <input
                   type="radio"
-                  name="payment-method"
+                  name="paymentMethod"
                   id="bca"
+                  value="BCA"
                   className="peer hidden"
                 />
                 <label
@@ -184,8 +227,9 @@ function PaymentForm() {
               <div>
                 <input
                   type="radio"
-                  name="payment-method"
+                  name="paymentMethod"
                   id="bri"
+                  value="BRI"
                   className="peer hidden"
                 />
                 <label
@@ -198,8 +242,9 @@ function PaymentForm() {
               <div>
                 <input
                   type="radio"
-                  name="payment-method"
+                  name="paymentMethod"
                   id="ovo"
+                  value="OVO"
                   className="peer hidden"
                 />
                 <label
@@ -243,7 +288,9 @@ function PaymentForm() {
                 <h2 className="pb-2 text-slate-400 font-medium col-span-4 text-xl cursor-pointer">
                   Total Payment
                 </h2>
-                <strong className="text-3xl text-color-primary">$30</strong>
+                <strong className="text-3xl text-color-primary">
+                  ${dataCinema.totalPrice}
+                </strong>
               </div>
               <p className="text-color-grey text-xl leading-10">
                 Pay this payment bill before it is due, on
@@ -251,21 +298,23 @@ function PaymentForm() {
                 If the bill has not been paid by the specified time, it will be
                 forfeited
               </p>
-              <Link to="/movie/ticket-result">
-                <button
-                  type="submit"
-                  onSubmit={SubmitHandler}
-                  className="button-md w-full bg-color-primary text-color-ligth text-xl font-bold py-4 shadow-lg active:scale-[0.97]"
-                >
-                  Check Payment
-                </button>
-              </Link>
-              <p
-                onClick={modalHandler}
-                className="text-center text-xl text-color-primary font-bold cursor-pointer"
+              {/* <Link to="/movie/ticket-result"> */}
+              <button
+                type="submit"
+                onClick={() => paidHandler(true)}
+                className="button-md w-full bg-color-primary text-color-ligth text-xl font-bold py-4 shadow-lg active:scale-[0.97]"
+              >
+                Check Payment
+              </button>
+              {/* </Link> */}
+
+              <button
+                type="submit"
+                onClick={() => paidHandler(false)}
+                className="text-center text-xl text-color-primary font-bold cursor-pointer w-max mx-auto"
               >
                 Pay Later
-              </p>
+              </button>
             </div>
           </div>
         </form>

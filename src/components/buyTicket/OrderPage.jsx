@@ -1,13 +1,25 @@
 import React, { useState, useEffect } from "react";
 import Seat from "./Seat";
-import Logo from "/images/sponsor/CineOne21.svg";
-import { useParams, Link } from "react-router";
+import { useParams, Link, useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { userSelectCinema } from "../../redux/slices/dataUserCinema";
 const VITE_AUTH = import.meta.env.VITE_AUTH;
 
 function OrderPage() {
   const [openModal, setOpenModal] = useState(false);
   function modalHandler() {
     openModal ? setOpenModal(false) : setOpenModal(true);
+  }
+  const [seat, setSeat] = useState([]);
+
+  function addSeat(e) {
+    const seatCheck = e.target.value;
+    if (e.target.checked) {
+      setSeat([...seat, seatCheck]);
+    } else {
+      const removeSeat = seat.filter((el) => el !== seatCheck);
+      setSeat(removeSeat);
+    }
   }
 
   const [detailsMovie, setDetailsMovie] = useState({});
@@ -28,12 +40,28 @@ function OrderPage() {
       .catch((err) => console.error(err));
   }, []);
 
-  console.log(detailsMovie);
+  const dataCinema = useSelector((state) => state.dataUserCinema.userCinema);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  function submitHandlerOrder(e) {
+    e.preventDefault();
+    const chooseSeat = e.target.seat.value;
+    const totalPrice = e.target.totalPrice.value;
+    const title = e.target.title.value;
+    const newData = {
+      seat: chooseSeat.split(" "),
+      totalPrice: parseInt(totalPrice),
+      title,
+    };
+    dispatch(userSelectCinema({ ...dataCinema, ...newData }));
+    navigate("/movie/payment");
+  }
 
   return (
     <>
       <div className="grid grid-cols-1 bg-white relative lg:grid-cols-7">
-        <section className="lg:col-span-4 py-8">
+        <form className="lg:col-span-4 py-8" onChange={addSeat}>
           <div className="p-8 place-self-center w-full">
             <div className="border-2 border-slate-300 p-2 flex flex-col gap-4 items-center max-w-[525px] mx-auto lg:grid lg:grid-cols-4 lg:grid-rows-3 lg:gap-y-0">
               <div className="aspect-video w-full bg-amber-200 overflow-hidden rounded-lg lg:row-span-3 lg:aspect-[4/3]">
@@ -55,7 +83,7 @@ function OrderPage() {
                     ))}
               </div>
               <p className="text-black text-center font-medium lg:row-start-3 lg:col-start-2 lg:col-end-4 lg:text-left lg:text-sm">
-                Regular - 13:00 PM
+                {dataCinema.grade} - {dataCinema.time}
               </p>
               <Link to="/movie" className="lg:col-start-4 lg:row-start-3">
                 <button
@@ -76,61 +104,61 @@ function OrderPage() {
               <div className="grid grid-cols-2 gap-8">
                 <div className="grid grid-cols-7 w-full h-max gap-2 relative after:content-[''] after:absolute after:top-1 after:bottom-1 after:left-[-8px] after:bg-green-500 after:w-1 before:content-[''] before:absolute before:rigth-0 before:bottom-[-8px] before:left-0 before:bg-red-500 before:w-full before:h-1 before:z-10 lg:grid-cols-8 lg:after:hidden lg:before:hidden">
                   <div className="hidden font-bold lg:block">A</div>
-                  <Seat id="a1" />
-                  <Seat id="a2" />
-                  <Seat id="a3" />
-                  <Seat id="a4" />
-                  <Seat id="a5" />
-                  <Seat id="a6" />
-                  <Seat id="a7" />
+                  <Seat id="A1" />
+                  <Seat id="A2" />
+                  <Seat id="A3" />
+                  <Seat id="A4" />
+                  <Seat id="A5" />
+                  <Seat id="A6" />
+                  <Seat id="A7" />
                   <div className="hidden font-bold lg:block">B</div>
-                  <Seat id="b1" />
-                  <Seat id="b2" />
-                  <Seat id="b3" />
-                  <Seat id="b4" />
-                  <Seat id="b5" />
-                  <Seat id="b6" />
-                  <Seat id="b7" />
+                  <Seat id="B1" />
+                  <Seat id="B2" />
+                  <Seat id="B3" />
+                  <Seat id="B4" />
+                  <Seat id="B5" />
+                  <Seat id="B6" />
+                  <Seat id="B7" />
                   <div className="hidden font-bold lg:block">C</div>
-                  <Seat id="c1" />
-                  <Seat id="c2" />
-                  <Seat id="c3" />
-                  <Seat id="c4" />
-                  <Seat id="c5" />
-                  <Seat id="c6" />
-                  <Seat id="c7" />
+                  <Seat id="C1" />
+                  <Seat id="C2" />
+                  <Seat id="C3" />
+                  <Seat id="C4" />
+                  <Seat id="C5" />
+                  <Seat id="C6" />
+                  <Seat id="C7" />
                   <div className="hidden font-bold lg:block">D</div>
-                  <Seat id="d1" />
-                  <Seat id="d2" />
-                  <Seat id="d3" />
-                  <Seat id="d4" />
-                  <Seat id="d5" />
-                  <Seat id="d6" />
-                  <Seat id="d7" />
+                  <Seat id="D1" />
+                  <Seat id="D2" />
+                  <Seat id="D3" />
+                  <Seat id="D4" />
+                  <Seat id="D5" />
+                  <Seat id="D6" />
+                  <Seat id="D7" />
                   <div className="hidden font-bold lg:block">E</div>
-                  <Seat id="e1" />
-                  <Seat id="e2" />
-                  <Seat id="e3" />
-                  <Seat id="e4" />
-                  <Seat id="e5" />
-                  <Seat id="e6" />
-                  <Seat id="e7" />
+                  <Seat id="E1" />
+                  <Seat id="E2" />
+                  <Seat id="E3" />
+                  <Seat id="E4" />
+                  <Seat id="E5" />
+                  <Seat id="E6" />
+                  <Seat id="E7" />
                   <div className="hidden font-bold lg:block">F</div>
-                  <Seat id="f1" />
-                  <Seat id="f2" />
-                  <Seat id="f3" />
-                  <Seat id="f4" />
-                  <Seat id="f5" />
-                  <Seat id="f6" />
-                  <Seat id="f7" />
+                  <Seat id="F1" />
+                  <Seat id="F2" />
+                  <Seat id="F3" />
+                  <Seat id="F4" />
+                  <Seat id="F5" />
+                  <Seat id="F6" />
+                  <Seat id="F7" />
                   <div className="hidden font-bold lg:block">G</div>
-                  <Seat id="g1" />
-                  <Seat id="g2" />
-                  <Seat id="g3" />
-                  <Seat id="g4" />
-                  <Seat id="g5" />
-                  <Seat id="g6" />
-                  <Seat id="g7" />
+                  <Seat id="G1" />
+                  <Seat id="G2" />
+                  <Seat id="G3" />
+                  <Seat id="G4" />
+                  <Seat id="G5" />
+                  <Seat id="G6" />
+                  <Seat id="G7" />
                   <div className="hidden font-bold lg:block"></div>
                   <div className="hidden font-bold lg:block lg:text-center">
                     1
@@ -158,73 +186,73 @@ function OrderPage() {
                   <div className="hidden font-bold lg:block lg:text-transparent">
                     A
                   </div>
-                  <Seat id="a8" />
-                  <Seat id="a9" />
-                  <Seat id="a0" />
-                  <Seat id="a11" />
-                  <Seat id="a12" />
-                  <Seat id="a13" />
-                  <Seat id="a14" />
+                  <Seat id="A8" />
+                  <Seat id="A9" />
+                  <Seat id="A10" />
+                  <Seat id="A11" />
+                  <Seat id="A12" />
+                  <Seat id="A13" />
+                  <Seat id="A14" />
                   <div className="hidden font-bold lg:block lg:text-transparent">
                     B
                   </div>
-                  <Seat id="b8" />
-                  <Seat id="b9" />
-                  <Seat id="b0" />
-                  <Seat id="b11" />
-                  <Seat id="b12" />
-                  <Seat id="b13" />
-                  <Seat id="b14" />
+                  <Seat id="B8" />
+                  <Seat id="B9" />
+                  <Seat id="B10" />
+                  <Seat id="B11" />
+                  <Seat id="B12" />
+                  <Seat id="B13" />
+                  <Seat id="B14" />
                   <div className="hidden font-bold lg:block lg:text-transparent">
                     C
                   </div>
-                  <Seat id="c8" />
-                  <Seat id="c9" />
-                  <Seat id="c0" />
-                  <Seat id="c11" />
-                  <Seat id="c12" />
-                  <Seat id="c13" />
-                  <Seat id="c14" />
+                  <Seat id="C8" />
+                  <Seat id="C9" />
+                  <Seat id="C10" />
+                  <Seat id="C11" />
+                  <Seat id="C12" />
+                  <Seat id="C13" />
+                  <Seat id="C14" />
                   <div className="hidden font-bold lg:block lg:text-transparent">
                     D
                   </div>
-                  <Seat id="d8" />
-                  <Seat id="d9" />
-                  <Seat id="d0" />
-                  <Seat id="d11" />
-                  <Seat id="d12" />
-                  <Seat id="d13" />
-                  <Seat id="d14" />
+                  <Seat id="D8" />
+                  <Seat id="D9" />
+                  <Seat id="D10" />
+                  <Seat id="D11" />
+                  <Seat id="D12" />
+                  <Seat id="D13" />
+                  <Seat id="D14" />
                   <div className="hidden font-bold lg:block lg:text-transparent">
                     E
                   </div>
-                  <Seat id="e8" />
-                  <Seat id="e9" />
-                  <Seat id="e0" />
-                  <Seat id="e11" />
-                  <Seat id="e12" />
-                  <Seat id="e13" />
-                  <Seat id="e14" />
+                  <Seat id="E8" />
+                  <Seat id="E9" />
+                  <Seat id="E10" />
+                  <Seat id="E11" />
+                  <Seat id="E12" />
+                  <Seat id="E13" />
+                  <Seat id="E14" />
                   <div className="hidden font-bold lg:block lg:text-transparent">
                     F
                   </div>
-                  <Seat id="f8" />
-                  <Seat id="f9" />
-                  <Seat id="f0" />
-                  <Seat id="f11" />
-                  <Seat id="f12" />
-                  <Seat id="f13" />
-                  <Seat id="f14" />
+                  <Seat id="F8" />
+                  <Seat id="F9" />
+                  <Seat id="F10" />
+                  <Seat id="F11" />
+                  <Seat id="F12" />
+                  <Seat id="F13" />
+                  <Seat id="F14" />
                   <div className="hidden font-bold lg:block lg:text-transparent">
                     G
                   </div>
-                  <Seat id="g8" />
-                  <Seat id="g9" />
-                  <Seat id="g0" />
-                  <Seat id="g11" />
-                  <Seat id="g12" />
-                  <Seat id="g13" />
-                  <Seat id="g14" />
+                  <Seat id="G8" />
+                  <Seat id="G9" />
+                  <Seat id="G10" />
+                  <Seat id="G11" />
+                  <Seat id="G12" />
+                  <Seat id="G13" />
+                  <Seat id="G14" />
                   <div className="hidden font-bold lg:block lg:text-transparent">
                     A
                   </div>
@@ -310,7 +338,7 @@ function OrderPage() {
               </select>
             </div>
             <button
-              type="button"
+              type="submit"
               className="button-lg border-2 border-blue-600 text-lg font-bold text-color-primary active:scale-[0.97] lg:hidden"
             >
               Add new seat
@@ -325,45 +353,66 @@ function OrderPage() {
               Submit
             </button>
           </div>
-        </section>
-        <section
+        </form>
+        <form
+          onSubmit={submitHandlerOrder}
           className={`${
             openModal ? "flex" : "hidden"
-          } absolute top-0 left-0 right-0 bottom-0 justify-center items-center after:content-[''] after:absolute after:top-0 after:left-0 after:right-0 after:bottom-0 after:bg-slate-950 after:opacity-30 max-w-[525px] lg:static lg:flex lg:after:hidden lg:col-start-5 lg:col-span-2 lg:place-self-start lg:mt-8`}
+          } absolute top-0 left-0 right-0 bottom-0 justify-center items-center after:content-[''] after:absolute after:top-0 after:left-0 after:right-0 after:bottom-0 after:bg-slate-950 after:opacity-30 max-w-[525px] lg:static lg:flex lg:after:hidden lg:col-start-5 lg:col-span-3 lg:place-self-start lg:mt-8`}
         >
           <div className="p-8 rounded-lg bg-white opacity-100 z-10 w-[80%] flex flex-col gap-3 lg:max-w-[670px] items-center">
-            <img src={Logo} alt="logo" className="w-48" />
-            <h1 className="text-2xl font-semibold">CineOne 21 Cinema</h1>
+            <img src={dataCinema.cinemaLogo} alt="logo" className="w-48" />
+            <h1 className="text-2xl font-semibold">{dataCinema.cinemaName}</h1>
             <div className="w-full grid grid-cols-2 gap-3">
               <h1 className="self-start text-slate-400">Movie selected</h1>
               <p className="justify-self-end font-semibold text-right">
-                Spider-Man: Homecoming
+                {detailsMovie.title}
               </p>
-              <h1 className="self-start text-slate-400">
-                Tuesday, 07 July 2020
-              </h1>
+              <input
+                type="text"
+                name="title"
+                value={detailsMovie.title}
+                className="hidden"
+              />
+              <h1 className="self-start text-slate-400">{dataCinema.date}</h1>
               <p className="justify-self-end font-semibold text-right">
-                13:00pm
+                {dataCinema.time}
               </p>
               <h1 className="self-start text-slate-400">One ticket price</h1>
-              <p className="justify-self-end font-semibold text-right">$10</p>
+              <p className="justify-self-end font-semibold text-right">
+                ${parseInt(dataCinema.price)}
+              </p>
               <h1 className="self-start text-slate-400">Seat choosed</h1>
-              <p className="justify-self-end font-semibold text-right">C4</p>
+              <p className="justify-self-end font-semibold text-right">
+                {seat.join(", ")}
+              </p>
+              <input
+                type="text"
+                name="seat"
+                value={seat.join(" ")}
+                className="hidden"
+              />
               <h1 className="self-start font-bold text-lg">Total Payment</h1>
               <p className="justify-self-end font-bold text-right text-lg text-color-primary">
-                $30
+                ${seat.length * parseInt(dataCinema.price)}
               </p>
+              <input
+                type="text"
+                name="totalPrice"
+                value={seat.length * parseInt(dataCinema.price)}
+                className="hidden"
+              />
             </div>
-            <Link to="/movie/payment" className="w-full">
-              <button
-                type="submit"
-                className="button-lg w-full bg-color-primary text-white font-semibold active:scale-[0.97]"
-              >
-                Confirm Order
-              </button>
-            </Link>
+            {/* <Link to="/movie/payment" className="w-full"> */}
+            <button
+              type="submit"
+              className="w-full button-lg bg-color-primary text-white font-semibold active:scale-[0.97]"
+            >
+              Confirm Order
+            </button>
+            {/* </Link> */}
           </div>
-        </section>
+        </form>
       </div>
     </>
   );
