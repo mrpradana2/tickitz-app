@@ -98,7 +98,7 @@ function PaymentForm() {
                 type="text"
                 id="fullName"
                 name="fullName"
-                defaultValue="Jonas El Rodriguez"
+                defaultValue={dataUser.fullName}
                 className="input"
               />
             </div>
@@ -128,7 +128,7 @@ function PaymentForm() {
                 type="text"
                 id="phoneNumber"
                 name="phoneNumber"
-                defaultValue="81445687121"
+                defaultValue={dataUser.phoneNumber}
                 className="input"
               />
             </div>
