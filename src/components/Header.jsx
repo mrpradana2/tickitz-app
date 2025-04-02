@@ -1,21 +1,17 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import LogoTickitz from "/images/logo/logo-Tickitz.svg";
 import LogoTickitz2 from "/images/logo/Tickitz2.svg";
-import useLocalStorage from "../hooks/useLocalStorage";
 import { useNavigate, Link } from "react-router";
 import Photo from "/images/profile/photo-profile.png";
-// import { userContext } from "../contexts/userContext";
+import { useSelector, useDispatch } from "react-redux";
+import { userLogout } from "../redux/slices/userAuth";
 
 export default function Header() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const [user, setUser] = useContext(userContext);
-  // console.log(userCtx);
-  const [user, setUser] = useLocalStorage("data:user", {});
+  const dataUser = useSelector((state) => state.dataUserLogin.user);
   function logOut() {
-    setUser({
-      email: "",
-      password: "",
-    });
+    dispatch(userLogout());
     navigate("/");
   }
 
@@ -84,7 +80,7 @@ export default function Header() {
             isOpen ? "translate-x-0" : "-translate-x-full"
           } lg:static lg:translate-x-0 lg:mr-8 lg:shadow-none lg:bg-transparent`}
         >
-          {user.email && user.password ? (
+          {dataUser !== null ? (
             <>
               <button
                 type="button"
