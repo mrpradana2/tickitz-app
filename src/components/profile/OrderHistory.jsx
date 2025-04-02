@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import Hero from "/images/sponsor/CineOne21.svg";
-import Hero2 from "/images/sponsor/ebv.id.svg";
-import QrCode from "/images/qr-code/qr-code.png";
+import OrderStatus from "./OrderStatus";
 
 export default function OrderHistory({ bar }) {
   const [openDetails, setOpenDetails] = useState(false);
@@ -21,7 +19,31 @@ export default function OrderHistory({ bar }) {
           bar ? "hidden" : "flex"
         } flex-col gap-4 lg:col-start-5 lg:col-span-7 lg:row-span-6`}
       >
-        <section className="bg-white rounded-xl p-8 flex flex-col gap-4">
+        <OrderStatus
+          dateTIme="Tuesday, 07 July 2020 - 04:30pm"
+          titleMovie="Spider-Man: Homecoming"
+          price="$30"
+          paid={false}
+        />
+        <OrderStatus
+          dateTIme="Tuesday, 07 July 2020 - 04:30pm"
+          titleMovie="Spider-Man: Homecoming"
+          price="$30"
+          paid={true}
+        />
+        <OrderStatus
+          dateTIme="Tuesday, 07 July 2020 - 04:30pm"
+          titleMovie="Spider-Man: Homecoming"
+          price="$30"
+          paid={true}
+        />
+        <OrderStatus
+          dateTIme="Tuesday, 07 July 2020 - 04:30pm"
+          titleMovie="Spider-Man: Homecoming"
+          price="$30"
+          paid={false}
+        />
+        {/* <section className="bg-white rounded-xl p-8 flex flex-col gap-4">
           <div>
             <div className="flex flex-col gap-4 border-b-2 border-slate-300 pb-8 lg:border-none">
               <img src={Hero} alt="Logo" className="w-36" />
@@ -149,7 +171,7 @@ export default function OrderHistory({ bar }) {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
       </div>
     </>
   );

@@ -23,7 +23,7 @@ export default function ProfilePage() {
   return (
     <>
       <Header />
-      <div className="grid grid-cols-1 gap-4 p-4 relative max-w-xl mx-auto lg:grid-cols-12 lg:w-[95%] lg:max-w-none">
+      <div className="grid grid-cols-1 gap-8 p-4 relative max-w-xl mx-auto lg:grid-cols-12 lg:w-[95%] lg:max-w-none">
         <NavProfile
           onDetailsClick={detailsAcc}
           onOrderHistory={orderHistory}
