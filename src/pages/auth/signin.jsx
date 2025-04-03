@@ -148,7 +148,13 @@ export default function Signin() {
             >
               Login
             </button>
-            <p className="relative text-center my-4 mb-6 after:content[''] after:absolute after:left-0 after:top-1/2 after:h-[4px] after:w-[45%] after:bg-slate-200 after:rounded-md before:content[''] before:absolute before:right-0 before:top-1/2 before:h-[4px] before:w-[45%] before:bg-slate-200 before:rounded-md before:z-20">
+            <p className="text-center text-sm">
+              Don't have an account?{" "}
+              <a href="/auth/signup" className="text-blue-600 hover:underline">
+                Sign up
+              </a>
+            </p>
+            <p className="relative text-center my-4 mb-4 after:content[''] after:absolute after:left-0 after:top-1/2 after:h-[4px] after:w-[45%] after:bg-slate-200 after:rounded-md before:content[''] before:absolute before:right-0 before:top-1/2 before:h-[4px] before:w-[45%] before:bg-slate-200 before:rounded-md before:z-20">
               or
             </p>
             <div className="flex gap-4 justify-center">
