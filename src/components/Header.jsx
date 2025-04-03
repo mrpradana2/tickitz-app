@@ -15,6 +15,11 @@ export default function Header() {
     navigate("/");
   }
 
+  const [modalLogOut, setModalLogOut] = useState(false);
+  function modalLogOutHandler() {
+    modalLogOut ? setModalLogOut(false) : setModalLogOut(true);
+  }
+
   const [isOpen, setOpen] = useState(false);
   const [screenWidth, setScreenWIdth] = useState(window.innerWidth);
 
@@ -46,6 +51,33 @@ export default function Header() {
   return (
     <>
       <header className="header bg-color-ligth shadow-sm sticky lg:sticky top-0 z-50">
+        <div
+          className={`${
+            modalLogOut ? "block" : "hidden"
+          } fixed top-0 left-0 right-0 bottom-0 overlay z-30`}
+        >
+          <div className="fixed top-1/2 left-1/2 bg-slate-50 p-4 rounded-lg -translate-x-1/2 -translate-y-1/2 shadow-xl">
+            <p className="font-bold text-2xl text-center mb-4">
+              Are you sure you will exit this account ?
+            </p>
+            <div className="flex gap-3 justify-center">
+              <button
+                onClick={logOut}
+                type="button"
+                className="px-3 py-1 bg-blue-600 text-white rounded-lg cursor-pointer active:scale-[0.99]"
+              >
+                Yes
+              </button>
+              <button
+                onClick={modalLogOutHandler}
+                type="button"
+                className="px-3 py-1 bg-red-600 text-white rounded-lg cursor-pointer active:scale-[0.99]"
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </div>
         <div className="ml-8 md:ml-20">
           <img
             src={screenWidth < 1024 ? LogoTickitz2 : LogoTickitz}
@@ -85,7 +117,7 @@ export default function Header() {
               <button
                 type="button"
                 className="button-md bg-color-ligth text-color-primary border-primary"
-                onClick={logOut}
+                onClick={modalLogOutHandler}
               >
                 LogOut
               </button>
