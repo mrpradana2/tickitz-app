@@ -2,9 +2,35 @@ import React from "react";
 import openDetails from "../../hooks/openDetails";
 import Hero from "/images/sponsor/CineOne21.svg";
 import QrCode from "/images/qr-code/qr-code.png";
+import { useSelector, useDispatch } from "react-redux";
+import { changeOrderStatus } from "../../redux/slices/orderMovie";
 
-export default function OrderStatus({ dateTIme, titleMovie, price, paid }) {
+export default function OrderStatus({
+  dateTIme,
+  titleMovie,
+  price,
+  dataOrder,
+  date,
+  time,
+}) {
   const { isOpen, handlerOpen } = openDetails(false);
+  const dispatch = useDispatch();
+  const userActive = useSelector((state) => state.dataUserLogin.user);
+  const users = useSelector((state) => state.dataOrderMovie.orders);
+  const findUser = users.find((user) => user.email === userActive.email);
+  const orderStatus = findUser.orders.find(
+    (order) => order.date === date && order.time === time
+  );
+
+  function payOrder() {
+    dispatch(
+      changeOrderStatus({
+        email: userActive.email,
+        date: dataOrder.date,
+        time: dataOrder.time,
+      })
+    );
+  }
 
   return (
     <>
@@ -16,7 +42,7 @@ export default function OrderStatus({ dateTIme, titleMovie, price, paid }) {
             <h1 className="font-bold text-xl">{titleMovie}</h1>
           </div>
           <div className="flex flex-col gap-4 lg:flex-row">
-            {paid === false ? (
+            {orderStatus.paid === false ? (
               <>
                 <div className="text-center button-lg font-bold cursor-pointer active:scale-[0.97] bg-green-200 text-green-600 lg:max-w-[250px]">
                   Ticket in active
@@ -43,7 +69,7 @@ export default function OrderStatus({ dateTIme, titleMovie, price, paid }) {
         <div className={`${isOpen ? "block" : "hidden"}`}>
           <div className="rounded-lg bg-white opacity-100 z-10 w-full flex flex-col gap-3 lg:max-w-[670px]">
             <h1 className="text-xl font-bold pt-4">Ticket Information</h1>
-            {paid === false ? (
+            {orderStatus.paid === false ? (
               <>
                 <div className="grid grid-cols-4">
                   <h2 className="pb-2 text-slate-400 font-medium col-span-4 text-lg">
@@ -74,6 +100,7 @@ export default function OrderStatus({ dateTIme, titleMovie, price, paid }) {
                   be forfeited
                 </p>
                 <button
+                  onClick={() => payOrder()}
                   type="button"
                   className="button-lg bg-color-primary text-white cursor-pointer active:scale-[0.97]"
                 >
@@ -92,32 +119,40 @@ export default function OrderStatus({ dateTIme, titleMovie, price, paid }) {
                   </div>
                   <div>
                     <h1 className="text-slate-600">Time</h1>
-                    <p className="text-black text-lg font-bold">2:00pm</p>
+                    <p className="text-black text-lg font-bold">
+                      {dataOrder.time}
+                    </p>
                   </div>
                   <div>
                     <h1 className="text-slate-600">Seats</h1>
-                    <p className="text-black text-lg font-bold">C4, C5, C6</p>
+                    <p className="text-black text-lg font-bold">
+                      {dataOrder.seat.join(", ")}
+                    </p>
                   </div>
                   <div>
                     <h1 className="text-slate-600">Movie</h1>
-                    <p className="text-black text-lg font-bold">
-                      Spider-Man: ..
+                    <p className="text-black text-lg font-bold line-clamp-1">
+                      {dataOrder.title}
                     </p>
                   </div>
                   <div>
                     <h1 className="text-slate-600">Date</h1>
-                    <p className="text-black text-lg font-bold">07 Jul</p>
+                    <p className="text-black text-lg font-bold">
+                      {dataOrder.date}
+                    </p>
                   </div>
                   <div>
                     <h1 className="text-slate-600">Count</h1>
-                    <p className="text-black text-lg font-bold">3 pcs</p>
+                    <p className="text-black text-lg font-bold">
+                      {dataOrder.seat.length} pcs
+                    </p>
                   </div>
                 </div>
                 <div>
                   <h2 className="pb-2 text-slate-400 font-medium col-span-4 text-xl cursor-pointer">
                     Total
                   </h2>
-                  <strong className="text-3xl">$30</strong>
+                  <strong className="text-3xl">${dataOrder.totalPrice}</strong>
                 </div>
               </>
             )}

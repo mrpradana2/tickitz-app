@@ -5,6 +5,7 @@ import Facebook from "/icons/icon-auth/icons-fb.svg";
 import { validationEmail, validationPassword } from "../../hooks/validation.js";
 import { useDispatch } from "react-redux";
 import { addUser, removeAll } from "../../redux/slices/auth.js";
+import { addOrderMovie } from "../../redux/slices/orderMovie";
 
 export default function Signup() {
   const dispatch = useDispatch();
@@ -26,10 +27,11 @@ export default function Signup() {
     const password = e.target.password.value;
     const { resultEmail, messageEmail } = validationEmail(email);
     const { resultPassword, messagePassword } = validationPassword(password);
-    const newUser = { email, password };
+    const newUser = { email, password, fullname: "", phoneNumber: "" };
     setTimeout(() => {
       if (resultEmail === true && resultPassword === true) {
         dispatch(addUser(newUser));
+        dispatch(addOrderMovie({ email, orders: [] }));
         location.href = "/auth/signin";
       }
 

@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { use } from "react";
 
 const initialState = {
   orders: [],
@@ -19,12 +18,24 @@ const dataOrderMovie = createSlice({
       const { email, newOrder } = action.payload;
       const user = state.orders.find((user) => user.email === email);
       if (user) {
-        user.orders.push(newOrder);
+        user.orders.unshift(newOrder);
       }
+    },
+    changeOrderStatus: (state, action) => {
+      const { email, date, time } = action.payload;
+      const user = state.orders.find((user) => user.email === email);
+      const order = user.orders.find(
+        (order) => order.date === date && order.time === time
+      );
+      order.paid = true;
     },
   },
 });
 
-export const { addOrderMovie, removeAllOrder, addHistoryOrder } =
-  dataOrderMovie.actions;
+export const {
+  addOrderMovie,
+  removeAllOrder,
+  addHistoryOrder,
+  changeOrderStatus,
+} = dataOrderMovie.actions;
 export default dataOrderMovie.reducer;

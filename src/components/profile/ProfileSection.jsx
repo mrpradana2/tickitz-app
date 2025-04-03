@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import Photo from "/images/profile/photo-profile.png";
 import Star from "/images/profile/eva_star-fill.svg";
+import { useSelector } from "react-redux";
 
 export default function ProfileSection({ onButtonClick, bar }) {
+  const userActive = useSelector((state) => state.dataUserLogin.user);
+
   return (
     <>
       <section
@@ -19,7 +22,7 @@ export default function ProfileSection({ onButtonClick, bar }) {
               className="scale-[155%] translate-y-6"
             />
           </div>
-          <h1 className="text-2xl font-bold">Jonas El Rodriguez</h1>
+          <h1 className="text-2xl font-bold">{userActive.fullname}</h1>
           <p className="text-lg text-slate-600">Moviegoers</p>
         </div>
         <div className="flex flex-col gap-4">

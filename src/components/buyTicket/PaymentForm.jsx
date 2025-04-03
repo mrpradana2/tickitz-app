@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Gpay from "/images/img-payment/logos-google-pay.svg";
 import Visa from "/images/img-payment/logo-visa.svg";
 import GoPay from "/images/img-payment/Logo-GoPay.svg";
@@ -49,7 +49,12 @@ function PaymentForm() {
         newOrder: { ...dataCinema, ...newData },
       })
     );
-    navigate("/movie/ticket-result");
+
+    if (paid === true) {
+      navigate("/movie/ticket-result");
+    } else {
+      navigate("/");
+    }
   }
 
   return (
@@ -98,7 +103,7 @@ function PaymentForm() {
                 type="text"
                 id="fullName"
                 name="fullName"
-                defaultValue={dataUser.fullName}
+                defaultValue={dataUser.fullname}
                 className="input"
               />
             </div>

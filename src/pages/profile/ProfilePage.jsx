@@ -30,7 +30,11 @@ export default function ProfilePage() {
           bar={bar}
         />
         <ProfileSection onButtonClick={handlerOpenSetting} bar={bar} />
-        <AccountSetting state={isOpenSetting} bar={bar} />
+        <AccountSetting
+          state={isOpenSetting}
+          bar={bar}
+          setState={setIsOpenSetting}
+        />
         <OrderHistory bar={bar} />
       </div>
       <Footer />

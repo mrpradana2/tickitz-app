@@ -1,17 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import OrderStatus from "./OrderStatus";
+import { useSelector } from "react-redux";
 
 export default function OrderHistory({ bar }) {
-  const [openDetails, setOpenDetails] = useState(false);
-  const [openDetails2, setOpenDetails2] = useState(false);
-  function HandlerOpenDetails() {
-    openDetails ? setOpenDetails(false) : setOpenDetails(true);
-  }
-
-  function HandlerOpenDetails2() {
-    openDetails2 ? setOpenDetails2(false) : setOpenDetails2(true);
-  }
-
+  const [orders, setOrders] = useState([]);
+  const dataOrder = useSelector((state) => state.dataOrderMovie.orders);
+  const userActive = useSelector((state) => state.dataUserLogin.user);
+  useEffect(() => {
+    const user = dataOrder.find((user) => user.email === userActive.email);
+    setOrders(user.orders);
+  }, []);
   return (
     <>
       <div
@@ -19,7 +17,28 @@ export default function OrderHistory({ bar }) {
           bar ? "hidden" : "flex"
         } flex-col gap-4 lg:col-start-5 lg:col-span-7 lg:row-span-6`}
       >
-        <OrderStatus
+        {orders.length === 0 ? (
+          <>
+            <section className="bg-white rounded-xl p-8 flex flex-col gap-4">
+              <p className="text-2xl text-center">Order history is empty</p>
+            </section>
+          </>
+        ) : (
+          <>
+            {orders.map((order) => (
+              <OrderStatus
+                dateTIme={`${order.date} - ${order.time}`}
+                titleMovie={order.title}
+                price={order.totalPrice}
+                dataOrder={order}
+                date={order.date}
+                time={order.time}
+              />
+            ))}
+          </>
+        )}
+
+        {/* <OrderStatus
           dateTIme="Tuesday, 07 July 2020 - 04:30pm"
           titleMovie="Spider-Man: Homecoming"
           price="$30"
@@ -42,7 +61,7 @@ export default function OrderHistory({ bar }) {
           titleMovie="Spider-Man: Homecoming"
           price="$30"
           paid={false}
-        />
+        /> */}
         {/* <section className="bg-white rounded-xl p-8 flex flex-col gap-4">
           <div>
             <div className="flex flex-col gap-4 border-b-2 border-slate-300 pb-8 lg:border-none">
