@@ -11,6 +11,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { userSelectCinema } from "../../redux/slices/dataUserCinema";
 import { addHistoryOrder } from "../../redux/slices/orderMovie";
+import {
+  validationLetter,
+  validationNumber,
+  validationFormEmpty,
+  validationEmail,
+} from "../../hooks/validation";
 
 function PaymentForm() {
   const dispatch = useDispatch();
@@ -28,6 +34,11 @@ function PaymentForm() {
     setPaid(result);
   }
 
+  const [messName, setMessName] = useState(null);
+  const [messTelp, setMessTelp] = useState(null);
+  const [messPayment, setMessPayment] = useState(null);
+  const [messEmail, setMessEmail] = useState(null);
+
   function submitHandler(e) {
     e.preventDefault();
     const name = e.target.fullName.value;
@@ -42,18 +53,50 @@ function PaymentForm() {
       paymentMethod,
       paid: paidStatus,
     };
-    dispatch(userSelectCinema({ ...dataCinema, ...newData }));
-    dispatch(
-      addHistoryOrder({
-        email: dataUser.email,
-        newOrder: { ...dataCinema, ...newData },
-      })
+
+    const [validationName, messValidationName] = validationLetter(
+      name,
+      "Nama tidak boleh kosong",
+      "Nama yang anda masukkan tidak valid"
     );
 
-    if (paid === true) {
-      navigate("/movie/ticket-result");
+    const [validationTelp, messValidationTelp] = validationNumber(
+      phoneNumber,
+      "No handphone tidak boleh kosong",
+      "No handphone yang anda masukkan tidak valid"
+    );
+
+    const [validationPayment, messValidationPayment] = validationFormEmpty(
+      paymentMethod,
+      "Harap pilih metode pembayaran anda"
+    );
+
+    const { resultEmail, messageEmail } = validationEmail(receipentEmail);
+    if (
+      validationName === true &&
+      validationTelp === true &&
+      validationPayment === true &&
+      resultEmail === true
+    ) {
+      dispatch(userSelectCinema({ ...dataCinema, ...newData }));
+      dispatch(
+        addHistoryOrder({
+          email: dataUser.email,
+          newOrder: { ...dataCinema, ...newData },
+        })
+      );
+
+      if (paid === true) {
+        navigate("/movie/ticket-result");
+      } else {
+        navigate("/");
+      }
     } else {
-      navigate("/");
+      setMessName(messValidationName);
+      setMessTelp(messValidationTelp);
+      setMessPayment(messValidationPayment);
+      setMessEmail(messageEmail);
+      setIsOpenModal(false);
     }
   }
 
@@ -106,6 +149,13 @@ function PaymentForm() {
                 defaultValue={dataUser.fullname}
                 className="input"
               />
+              <p
+                className={`${
+                  messName === null ? "hidden" : "block"
+                } text-red-600 font-semibold text-sm`}
+              >
+                {messName}
+              </p>
             </div>
             <div className="py-4 border-b border-slate-200 flex flex-col gap-2">
               <label
@@ -121,6 +171,13 @@ function PaymentForm() {
                 defaultValue={dataUser.email}
                 className="input"
               />
+              <p
+                className={`${
+                  messEmail === null ? "hidden" : "block"
+                } text-red-600 font-semibold text-sm`}
+              >
+                {messEmail}
+              </p>
             </div>
             <div className="py-4 border-b border-slate-200 flex flex-col gap-2">
               <label
@@ -136,8 +193,22 @@ function PaymentForm() {
                 defaultValue={dataUser.phoneNumber}
                 className="input"
               />
+              <p
+                className={`${
+                  messTelp === null ? "hidden" : "block"
+                } text-red-600 font-semibold text-sm`}
+              >
+                {messTelp}
+              </p>
             </div>
             <h1 className="text-2xl font-bold pt-4">Payment Method</h1>
+            <p
+              className={`${
+                messPayment === null ? "hidden" : "block"
+              } text-red-600 font-semibold text-sm`}
+            >
+              {messPayment}
+            </p>
             <div className="flex gap-4 flex-wrap justify-evenly mt-4">
               <div>
                 <input
