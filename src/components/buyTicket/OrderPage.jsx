@@ -3,6 +3,7 @@ import Seat from "./Seat";
 import { useParams, Link, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { userSelectCinema } from "../../redux/slices/dataUserCinema";
+import { validationFormEmpty } from "../../hooks/validation";
 const VITE_AUTH = import.meta.env.VITE_AUTH;
 
 function OrderPage() {
@@ -43,19 +44,33 @@ function OrderPage() {
   const dataCinema = useSelector((state) => state.dataUserCinema.userCinema);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [errSeat, setErrSeat] = useState("");
 
   function submitHandlerOrder(e) {
     e.preventDefault();
     const chooseSeat = e.target.seat.value;
     const totalPrice = e.target.totalPrice.value;
     const title = e.target.title.value;
+    const [result, message] = validationFormEmpty(
+      chooseSeat,
+      "Anda harus memililh kursi"
+    );
+
+    if (result === false) {
+      setErrSeat(message);
+    } else {
+      setErrSeat("");
+    }
+
     const newData = {
       seat: chooseSeat.split(" "),
       totalPrice: parseInt(totalPrice),
       title,
     };
-    dispatch(userSelectCinema({ ...dataCinema, ...newData }));
-    navigate("/movie/payment");
+    if (result === true) {
+      dispatch(userSelectCinema({ ...dataCinema, ...newData }));
+      navigate("/movie/payment");
+    }
   }
 
   return (
@@ -363,6 +378,9 @@ function OrderPage() {
           <div className="p-8 rounded-lg bg-white opacity-100 z-10 w-[80%] flex flex-col gap-3 lg:max-w-[670px] items-center">
             <img src={dataCinema.cinemaLogo} alt="logo" className="w-48" />
             <h1 className="text-2xl font-semibold">{dataCinema.cinemaName}</h1>
+            <div className={`${errSeat === "" ? "hidden" : "block"}`}>
+              <p className="text-sm text-red-600 font-semibold">{errSeat}</p>
+            </div>
             <div className="w-full grid grid-cols-2 gap-3">
               <h1 className="self-start text-slate-400">Movie selected</h1>
               <p className="justify-self-end font-semibold text-right">
