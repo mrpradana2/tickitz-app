@@ -2,6 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { userLogin } from "../../redux/slices/userAuth";
 import { updateDataUser } from "../../redux/slices/auth";
+import {
+  validationLetter,
+  validationEmail,
+  validationNumber,
+  validationPassword,
+} from "../../hooks/validation";
 
 export default function AccountSetting({ state, bar, setState }) {
   const dispatch = useDispatch();
@@ -14,11 +20,18 @@ export default function AccountSetting({ state, bar, setState }) {
     setUser(result);
   }, []);
 
+  const [messName, setMessName] = useState(null);
+  const [messEmail, setMessEmail] = useState(null);
+  const [messPhoneNumber, setMessPhoneNumber] = useState(null);
+  const [messPassword, setMessPassword] = useState(null);
+  const [messPasswordConfirm, setMessPasswordConfirm] = useState(null);
+
   function submitHandler(e) {
     e.preventDefault();
     const fullname = e.target.fullname.value;
     const email = e.target.email.value;
     const phoneNumber = e.target.telp.value;
+    const pass = e.target.password.value;
     const passwordConfirm = e.target.passwordConfirm.value;
 
     const newData = {
@@ -27,17 +40,56 @@ export default function AccountSetting({ state, bar, setState }) {
       phoneNumber,
       password: passwordConfirm,
     };
-    dispatch(
-      updateDataUser({
-        email: userActive.email,
-        fullname,
-        newEmail: email,
-        phoneNumber,
-        password: passwordConfirm,
-      })
+
+    const [validationName, messValidationName] = validationLetter(
+      fullname,
+      "Nama lengkap harus diisi",
+      "Nama yang anda mesukkan tidak valid"
     );
-    dispatch(userLogin(newData));
-    setState(false);
+
+    const { resultEmail, messageEmail } = validationEmail(email);
+
+    const [validationTelp, messValidationTelp] = validationNumber(
+      phoneNumber,
+      "No handphone tidak boleh kosong",
+      "No handphone yang anda masukkan tidak valid"
+    );
+
+    const { resultPassword, messagePassword } = validationPassword(pass);
+
+    if (pass === passwordConfirm) {
+      setMessPasswordConfirm(null);
+    }
+
+    if (
+      validationName === true &&
+      resultEmail === true &&
+      validationTelp === true &&
+      resultPassword === true &&
+      pass === passwordConfirm
+    ) {
+      dispatch(
+        updateDataUser({
+          email: userActive.email,
+          fullname,
+          newEmail: email,
+          phoneNumber,
+          password: passwordConfirm,
+        })
+      );
+      dispatch(userLogin(newData));
+      setState(false);
+    } else {
+      setMessName(messValidationName);
+      setMessEmail(messageEmail);
+      setMessPhoneNumber(messValidationTelp);
+      setMessPassword(messagePassword);
+      if (pass === passwordConfirm) {
+        setMessPasswordConfirm(null);
+      } else {
+        setMessPasswordConfirm("Password berbeda");
+      }
+    }
   }
 
   return (
@@ -62,6 +114,13 @@ export default function AccountSetting({ state, bar, setState }) {
               className="input"
               defaultValue={user.fullname}
             />
+            <p
+              className={`${
+                messName === null ? "hidden" : "block"
+              } text-red-600 font-semibold text-sm`}
+            >
+              {messName}
+            </p>
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="email">E-mail</label>
@@ -72,6 +131,13 @@ export default function AccountSetting({ state, bar, setState }) {
               className="input"
               defaultValue={user.email}
             />
+            <p
+              className={`${
+                messEmail === null ? "hidden" : "block"
+              } text-red-600 font-semibold text-sm`}
+            >
+              {messEmail}
+            </p>
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="telp">Phone Number</label>
@@ -82,6 +148,13 @@ export default function AccountSetting({ state, bar, setState }) {
               className="input"
               defaultValue={user.phoneNumber}
             />
+            <p
+              className={`${
+                messPhoneNumber === null ? "hidden" : "block"
+              } text-red-600 font-semibold text-sm`}
+            >
+              {messPhoneNumber}
+            </p>
           </div>
           <p className="text-lg">Account and Privacy</p>
           <div className="flex flex-col gap-2">
@@ -93,6 +166,13 @@ export default function AccountSetting({ state, bar, setState }) {
               className="input"
               defaultValue={user.password}
             />
+            <p
+              className={`${
+                messPassword === null ? "hidden" : "block"
+              } text-red-600 font-semibold text-sm`}
+            >
+              {messPassword}
+            </p>
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="passwordConfirm">Confirm</label>
@@ -103,6 +183,13 @@ export default function AccountSetting({ state, bar, setState }) {
               className="input"
               defaultValue={user.password}
             />
+            <p
+              className={`${
+                messPasswordConfirm === null ? "hidden" : "block"
+              } text-red-600 font-semibold text-sm`}
+            >
+              {messPasswordConfirm}
+            </p>
           </div>
           <div>
             <button

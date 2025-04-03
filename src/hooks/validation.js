@@ -8,14 +8,12 @@ export function validationEmail(email) {
     email.indexOf(".") <= email.indexOf("@") + 2 ||
     email.length <= email.indexOf(".") + 2
   ) {
-    console.log("email salah");
     return {
       resultEmail: false,
       messageEmail: "Email yang anda masukkan tidak valid",
     };
   } else {
-    console.log("email benar");
-    return { resultEmail: true, messageEmail: "Email benar" };
+    return { resultEmail: true, messageEmail: null };
   }
 }
 
@@ -38,16 +36,13 @@ export function validationPassword(password) {
     resultCharacters &&
     resultNumbers
   ) {
-    console.log("password benar");
-    return { resultPassword: true, messagePassword: "Password benar" };
+    return { resultPassword: true, messagePassword: null };
   } else if (words.length <= 7) {
-    console.log("password harus lebih dari 7");
     return {
       resultPassword: 2,
       messagePassword: "Password harus lebih dari 7 karakter",
     };
   } else {
-    console.log("password salah");
     return {
       resultPassword: false,
       messagePassword:
@@ -85,6 +80,60 @@ export function validationPassword(password) {
   function checkCharacters(chars) {
     for (let char of chars) {
       if (characters.includes(char)) {
+        return true;
+      }
+    }
+    return false;
+  }
+}
+
+export function validationFormEmpty(input, message) {
+  if (input.length === 0) {
+    return [false, message];
+  } else {
+    return [true, null];
+  }
+}
+
+export function validationLetter(input, messEmpty, messNotValid) {
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWZYZ abcdefghijklmnopqrstuvwxyz";
+  const letter = input.split("");
+  const result = checkLetters(letter);
+
+  if (letter.length === 0) {
+    return [3, messEmpty];
+  } else if (result === false) {
+    return [false, messNotValid];
+  } else {
+    return [true, null];
+  }
+
+  function checkLetters(chars) {
+    for (let char of chars) {
+      if (letters.includes(char)) {
+        return true;
+      }
+    }
+    return false;
+  }
+}
+
+export function validationNumber(input, messEmpty, messNotValid) {
+  const numbers = "0123456789";
+  const number = input.split("");
+  const result = checkLetters(number);
+
+  if (number.length === 0) {
+    return [3, messEmpty];
+  } else if (result === false) {
+    return [false, messNotValid];
+  } else {
+    return [true, null];
+  }
+
+  function checkLetters(chars) {
+    for (let char of chars) {
+      if (numbers.includes(char)) {
         return true;
       }
     }
