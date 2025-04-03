@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import OrderStatus from "./OrderStatus";
 import { useSelector } from "react-redux";
+import EmptyCart from "/images/emptycart.png";
 
 export default function OrderHistory({ bar }) {
   const [orders, setOrders] = useState([]);
@@ -19,8 +20,9 @@ export default function OrderHistory({ bar }) {
       >
         {orders.length === 0 ? (
           <>
-            <section className="bg-white rounded-xl p-8 flex flex-col gap-4">
+            <section className="bg-white rounded-xl p-8 flex flex-col gap-4 items-center">
               <p className="text-2xl text-center">Order history is empty</p>
+              <img src={EmptyCart} alt="icon" width="250" />
             </section>
           </>
         ) : (
