@@ -35,6 +35,7 @@ export default function OrderHistory({ bar }) {
                 dataOrder={order}
                 date={order.date}
                 time={order.time}
+                logoCinema={order.cinemaLogo}
               />
             ))}
           </>

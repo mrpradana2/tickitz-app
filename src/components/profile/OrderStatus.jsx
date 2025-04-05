@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import openDetails from "../../hooks/openDetails";
 import Hero from "/images/sponsor/CineOne21.svg";
 import QrCode from "/images/qr-code/qr-code.png";
@@ -12,6 +12,7 @@ export default function OrderStatus({
   dataOrder,
   date,
   time,
+  logoCinema,
 }) {
   const { isOpen, handlerOpen } = openDetails(false);
   const dispatch = useDispatch();
@@ -32,12 +33,48 @@ export default function OrderStatus({
     );
   }
 
+  const [modalPayment, setModalPayment] = useState(false);
+
+  function modalPaymenthandler() {
+    modalPayment ? setModalPayment(false) : setModalPayment(true);
+  }
+
   return (
     <>
       <section className="bg-white rounded-xl p-8 flex flex-col gap-4">
+        <div
+          className={`${
+            modalPayment ? "block" : "hidden"
+          } fixed top-0 left-0 right-0 bottom-0 overlay z-30`}
+        >
+          <div className="fixed top-1/2 left-1/2 bg-slate-50 p-4 rounded-lg -translate-x-1/2 -translate-y-1/2 shadow-xl">
+            <p className="font-bold text-2xl text-center mb-4">
+              Are you going to make a payment now ?
+            </p>
+            <div className="flex gap-3 justify-center">
+              <button
+                onClick={() => {
+                  payOrder();
+                  modalPaymenthandler();
+                }}
+                type="button"
+                className="px-3 py-1 bg-blue-600 text-white rounded-lg cursor-pointer active:scale-[0.99]"
+              >
+                Pay now
+              </button>
+              <button
+                onClick={modalPaymenthandler}
+                type="button"
+                className="px-3 py-1 bg-red-600 text-white rounded-lg cursor-pointer active:scale-[0.99]"
+              >
+                Pay Later
+              </button>
+            </div>
+          </div>
+        </div>
         <div>
           <div className="flex flex-col gap-4 border-b-2 border-slate-300 pb-8 lg:border-none">
-            <img src={Hero} alt="Logo" className="w-36" />
+            <img src={logoCinema} alt="Logo" className="w-36" />
             <p className="text-slate-500">{dateTIme}</p>
             <h1 className="font-bold text-xl">{titleMovie}</h1>
           </div>
@@ -100,7 +137,7 @@ export default function OrderStatus({
                   be forfeited
                 </p>
                 <button
-                  onClick={() => payOrder()}
+                  onClick={modalPaymenthandler}
                   type="button"
                   className="button-lg bg-color-primary text-white cursor-pointer active:scale-[0.97]"
                 >
