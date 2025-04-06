@@ -2,6 +2,7 @@ import dataUsers from "./auth.js";
 import dataUserLogin from "./userAuth.js";
 import dataOrderMovie from "./orderMovie.js";
 import dataUserCinema from "./dataUserCinema.js";
+import dataMovies from "./dataMovies.js";
 import { combineReducers } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
@@ -26,6 +27,11 @@ const persistConfigUserCinema = {
   storage,
 };
 
+const persistConfigDataMovies = {
+  key: "dataMovies",
+  storage,
+};
+
 const persistedReducerDataUsers = persistReducer(persistConfig, dataUsers);
 const persistedReducerUserLogin = persistReducer(
   persistConfigUserLogin,
@@ -41,11 +47,17 @@ const persistedReducerOrderCinema = persistReducer(
   dataUserCinema
 );
 
+const persistedReducerDataMovies = persistReducer(
+  persistConfigDataMovies,
+  dataMovies
+);
+
 const reducer = combineReducers({
   dataUsers: persistedReducerDataUsers,
   dataUserLogin: persistedReducerUserLogin,
   dataOrderMovie: persistedReducerOrderMovie,
   dataUserCinema: persistedReducerOrderCinema,
+  dataMovies: persistedReducerDataMovies,
 });
 
 export default reducer;
