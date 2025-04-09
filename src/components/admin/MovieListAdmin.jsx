@@ -1,9 +1,6 @@
-import React, { useState } from "react";
-import Delete from "/icons/icon-admin/Delete.svg";
-import Edit from "/icons/icon-admin/Edit.svg";
-import Eye from "/icons/icon-admin/Eye.svg";
-import Hero from "/images/hero/hero-3.png";
+import React from "react";
 import Empty from "/images/emptyfolder.png";
+import RowListMovie from "./RowListMovie";
 import { Link } from "react-router";
 import { useSelector } from "react-redux";
 import { deleteMovie } from "../../redux/slices/dataMovies";
@@ -11,17 +8,17 @@ import { useDispatch } from "react-redux";
 
 export default function MovieListAdmin({ navigation }) {
   const dataMovies = useSelector((state) => state.dataMovies.movies);
-  const dispatch = useDispatch();
-  const [modalDelete, setModalDelete] = useState(false);
+  // const dispatch = useDispatch();
+  // const [modalDelete, setModalDelete] = useState(false);
 
-  function modalDeleteHandler() {
-    modalDelete ? setModalDelete(false) : setModalDelete(true);
-  }
+  // function modalDeleteHandler() {
+  //   modalDelete ? setModalDelete(false) : setModalDelete(true);
+  // }
 
-  function deleteMovieHandler(movie) {
-    dispatch(deleteMovie(movie));
-    setModalDelete(false);
-  }
+  // function deleteMovieHandler(movie) {
+  //   dispatch(deleteMovie(movie));
+  //   setModalDelete(false);
+  // }
 
   return (
     <>
@@ -97,6 +94,7 @@ export default function MovieListAdmin({ navigation }) {
                 <>
                   {dataMovies.map((movie, index) => (
                     <>
+                      <RowListMovie movie={movie} index={index} />
                       {/* <div
                         className={`${
                           modalDelete ? "block" : "hidden"
@@ -128,7 +126,7 @@ export default function MovieListAdmin({ navigation }) {
                         </div>
                       </div> */}
 
-                      <tr className="border-b-2 border-slate-200">
+                      {/* <tr className="border-b-2 border-slate-200">
                         <td className="py-2">{index + 1}</td>
                         <td className="block py-2 aspect-[4/3] max-w-[70px] overflow-hidden mx-auto">
                           <img src={Hero} alt="hero" />
@@ -160,7 +158,7 @@ export default function MovieListAdmin({ navigation }) {
                             <img src={Delete} alt="icon" className="w-5 h-5" />
                           </button>
                         </td>
-                      </tr>
+                      </tr> */}
                     </>
                   ))}
                 </>
