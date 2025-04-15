@@ -5,10 +5,12 @@ import Eye from "/icons/icon-admin/Eye.svg";
 import Hero from "/images/hero/hero-3.png";
 import { useDispatch } from "react-redux";
 import { deleteMovie } from "../../redux/slices/dataMovies";
+import { useNavigate } from "react-router";
 
 export default function RowListMovie({ movie, index }) {
   const [modalDelete, setModalDelete] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function modalDeleteHandler() {
     modalDelete ? setModalDelete(false) : setModalDelete(true);
@@ -51,13 +53,13 @@ export default function RowListMovie({ movie, index }) {
       <tr className="border-b-2 border-slate-200">
         <td className="py-2">{index + 1}</td>
         <td className="block py-2 aspect-[4/3] max-w-[70px] overflow-hidden mx-auto">
-          <img src={Hero} alt="hero" />
+          <img src={movie.dataURLImages[0]} alt="hero" />
         </td>
         <td className="py-2">{movie.nameMovie}</td>
         <td className="py-2">{movie.category.join(", ")}</td>
         <td className="py-2">{movie.release}</td>
         <td className="py-2">
-          {movie.hour} Hours {movie.minute} Minute
+          {movie.hour} Hours {movie.minutes} Minute
         </td>
         <td className="flex gap-2 justify-between py-2 items-center">
           <button
@@ -67,6 +69,7 @@ export default function RowListMovie({ movie, index }) {
             <img src={Eye} alt="icon" className="w-5 h-5" />
           </button>
           <button
+            onClick={() => navigate(`/admin/edit/${movie.idMovie}`)}
             type="button"
             className="w-8 h-8 bg-indigo-600 cursor-pointer active:scale-[0.97] flex justify-center items-center rounded-md gap-2"
           >

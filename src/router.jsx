@@ -12,6 +12,8 @@ import AdminPage from "./pages/admin/AdminPage";
 import PrivateRoute from "./components/PrivateRoute";
 import ProfilePage from "./pages/profile/ProfilePage";
 import AddMovie from "./pages/admin/AddMovie";
+import FormEditData from "./components/admin/FormEditData";
+import ListMovieAdmin from "./pages/admin/MovieListAdmin";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
@@ -73,7 +75,9 @@ export default function Router() {
             />
             <Route path="admin">
               <Route index element={<AdminPage />} />
+              <Route path="list-movie" element={<ListMovieAdmin />} />
               <Route path="add-movie" element={<AddMovie />} />
+              <Route path="edit/:idMovie" element={<FormEditData />} />
             </Route>
           </Routes>
         </BrowserRouter>

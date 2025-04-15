@@ -5,8 +5,11 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import Search from "/icons/icon-admin/Search.svg";
 import Photo from "/images/profile/photo-profile.png";
 import { Link } from "react-router";
+import { useNavigate } from "react-router";
 
-export default function HeaderAdmin({ onClickNav1, onClickNav2, navigation }) {
+export default function HeaderAdmin() {
+  //  onClickNav1, onClickNav2,
+  const navigate = useNavigate();
   const [isOpen, setOpen] = useState(false);
   const [screenWidth, setScreenWIdth] = useState(window.innerWidth);
 
@@ -42,20 +45,23 @@ export default function HeaderAdmin({ onClickNav1, onClickNav2, navigation }) {
           } lg:translate-x-0`}
         >
           <ul
-            className={`flex flex-col shadow-sm relative lg:flex-row lg:gap-8 lg:shadow-none lg:after:content-[''] lg:after:absolute lg:after:bottom-0 lg:after:h-[4px] lg:after:rounded-lg lg:after:bg-blue-600 lg:after:transition-all lg:after:duration-100 lg:after:left-0 lg:after:w-[30px] ${
-              navigation
-                ? "lg:after:translate-x-[28px]"
-                : "lg:after:translate-x-[121px]"
-            }`}
+            className={`flex flex-col shadow-sm relative lg:flex-row lg:gap-8 lg:shadow-none`}
+            // lg:after:content-[''] lg:after:absolute lg:after:bottom-0 lg:after:h-[4px] lg:after:rounded-lg lg:after:bg-blue-600 lg:after:transition-all lg:after:duration-100 lg:after:left-0 lg:after:w-[30px] ${
+            //   navigation
+            //     ? "lg:after:translate-x-[28px]"
+            //     : "lg:after:translate-x-[121px]"
+            // }
           >
             <li
-              onClick={onClickNav1}
+              onClick={() => navigate("/admin")}
+              // onClick={onClickNav1}
               className="h-12 text-center flex justify-center items-center cursor-pointer"
             >
               <p className="w-full h-full inline-block pt-3">Dashboard</p>
             </li>
             <li
-              onClick={onClickNav2}
+              onClick={() => navigate("/admin/list-movie")}
+              // onClick={onClickNav2}
               className="h-12 text-center flex justify-center items-center cursor-pointer"
             >
               <p className="w-full h-full inline-block pt-3">Movie</p>

@@ -10,6 +10,7 @@ export default function FormAddData() {
   const navigate = useNavigate();
   const [timeMovie, setTimeMovie] = useState([]);
   const [time, setTIme] = useState(null);
+  const [messThumbnail, setMessThumbnail] = useState(null);
   const [messMovieName, setMessMovieName] = useState(null);
   const [messCategory, setMessCategory] = useState(null);
   const [messRelease, setMessRelease] = useState(null);
@@ -28,11 +29,36 @@ export default function FormAddData() {
   }
 
   function addTimeMovie() {
+    if (time === null) {
+      return;
+    }
     setTimeMovie([...timeMovie, time]);
   }
+  const [imageName, setImageName] = useState(null);
 
-  function submitHandler(e) {
+  async function filePhotoName(e) {
+    const file = e.target.files[0];
+    setImageName(file.name);
+    setMessThumbnail(null);
+  }
+
+  async function submitHandler(e) {
     e.preventDefault();
+    const filePhoto = e.target.upload.files[0];
+    const readFileAsDataURL = (filePhoto) =>
+      new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(filePhoto);
+      });
+
+    let dataURLImages = [];
+    if (filePhoto) {
+      const base64 = await readFileAsDataURL(filePhoto);
+      dataURLImages.push(base64);
+    }
+
     const nameMovie = e.target.fullname.value;
     const categoryInput = e.target.category.value;
     const category = categoryInput.split(", ");
@@ -45,10 +71,33 @@ export default function FormAddData() {
     const synopsis = e.target.synopsis.value;
     const location = e.target.location.value;
     const dateMovie = e.target.datetime.value;
-    const timeMovieInput = e.target.time.value;
+    const timeMovieInput = e.target.timeMovie.value;
     const timeMovie = timeMovieInput.split(", ");
+    const dateTime = new Date();
+    const date = dateTime
+      .toLocaleDateString("id-ID", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      })
+      .split("")
+      .filter((char) => char !== "/")
+      .join("");
+    const time = dateTime
+      .toLocaleTimeString("id-ID", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      })
+      .split("")
+      .filter((char) => char !== ".")
+      .join("");
+
+    const idMovie = "mv" + date + time;
 
     const newData = {
+      dataURLImages,
+      idMovie,
       nameMovie,
       category,
       release,
@@ -61,6 +110,11 @@ export default function FormAddData() {
       dateMovie,
       timeMovie,
     };
+
+    const [validationThumbnail, messValidationThumbnail] = validationFormEmpty(
+      dataURLImages,
+      "Anda belum memasukkan thumbnail"
+    );
 
     const [movieName, messMovieName] = validationFormEmpty(
       nameMovie,
@@ -120,6 +174,7 @@ export default function FormAddData() {
     );
 
     if (
+      validationThumbnail === true &&
       movieName === true &&
       valdationCategory === true &&
       validationRelease === true &&
@@ -133,7 +188,7 @@ export default function FormAddData() {
       validationTimeMovie === true
     ) {
       dispatch(addMovie(newData));
-      navigate("/admin");
+      navigate("/admin/list-movie");
     } else {
       setMessMovieName(messMovieName);
       setMessCategory(messValidationCategory);
@@ -146,6 +201,7 @@ export default function FormAddData() {
       setMessLocation(messValidationLocation);
       setMessDateMovie(messValidationDateMovie);
       setMessTimeMovie(messValidationTimeMovie);
+      setMessThumbnail(messValidationThumbnail);
     }
   }
 
@@ -156,13 +212,30 @@ export default function FormAddData() {
           <h1 className="text-xl text-slate-700 font-semibold">Add Movie</h1>
           <div className="flex flex-col gap-2">
             <p className="text-slate-700">Upload Image</p>
-            <input type="file" name="upload" id="upload" className="hidden" />
+            <input
+              onChange={filePhotoName}
+              type="file"
+              name="upload"
+              id="upload"
+              accept="image/*"
+              className="hidden"
+            />
             <label
               htmlFor="upload"
               className="block w-max px-3 py-1.5 rounded-lg bg-color-primary text-sm font-semibold text-white cursor-pointer active:scale-[0.97]"
             >
               Upload
             </label>
+            <p className={`${imageName === null ? "block" : "block"}`}>
+              {imageName}
+            </p>
+            <p
+              className={`${
+                messThumbnail === null ? "hidden" : "block"
+              } text-red-600 font-semibold text-sm`}
+            >
+              {messThumbnail}
+            </p>
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="full-name" className="text-slate-700">

@@ -1,9 +1,7 @@
-import { useState } from "react";
 import LayoutHeaderAdmin from "../../layouts/LayoutHeaderAdmin";
 import MovieListAdmin from "../../components/admin/MovieListAdmin";
-import ChartDashboard from "../../components/admin/ChartDashboard";
 
-export default function AdminPage() {
+export default function ListMovieAdmin() {
   // const [navigation, setNavgation] = useState(true);
   // function handleNav1() {
   //   setNavgation(true);
@@ -21,8 +19,8 @@ export default function AdminPage() {
         // navigation={navigation}
         content={
           <>
-            {/* <MovieListAdmin /> */}
-            <ChartDashboard />
+            <MovieListAdmin />
+            {/* <ChartDashboard /> */}
           </>
         }
       />

@@ -1,13 +1,11 @@
 import React from "react";
 import Chart from "/images/profile/Chart.png";
 
-export default function ChartDashboard({ navigation }) {
+export default function ChartDashboard() {
   return (
     <>
       <section
-        className={`${
-          navigation ? "flex" : "hidden"
-        } p-8 bg-white rounded-lg mx-auto w-[90%] flex-col gap-8 mt-8`}
+        className={`flex p-8 bg-white rounded-lg mx-auto w-[90%] flex-col gap-8 mt-8`}
       >
         <h1 className="text-xl text-slate-700 font-semibold">Sales Chart</h1>
         <form className="flex flex-col gap-4 lg:flex-row">
