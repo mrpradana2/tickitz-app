@@ -1,5 +1,5 @@
 import React from "react";
-import Cinema from "./Cinema";
+import Cinema from "./Cinema.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import { userSelectCinema } from "../../redux/slices/dataUserCinema";
 import { useNavigate, useParams } from "react-router";
