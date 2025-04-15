@@ -15,7 +15,6 @@ const dataMovies = createSlice({
       state.movies = [];
     },
     deleteMovie: (state, action) => {
-      console.log(action.payload);
       const newData = state.movies.filter(
         (movie) => movie.nameMovie !== action.payload
       );
