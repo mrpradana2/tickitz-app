@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import TimeSelect from "./timeSelect";
+import TimeSelect from "./TimeSelect";
 
 export default function Cinema({ cinemaLogo, cinemaName, address, schedules }) {
   const [isOpen, setIsOpen] = useState(false);
