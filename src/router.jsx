@@ -14,6 +14,7 @@ import ProfilePage from "./pages/profile/ProfilePage";
 import AddMovie from "./pages/admin/AddMovie";
 import FormEditData from "./components/admin/FormEditData";
 import ListMovieAdmin from "./pages/admin/MovieListAdmin";
+import NotFound from "./pages/404";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
@@ -79,6 +80,7 @@ export default function Router() {
               <Route path="add-movie" element={<AddMovie />} />
               <Route path="edit/:idMovie" element={<FormEditData />} />
             </Route>
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       </PersistGate>

@@ -1,4 +1,8 @@
 import React from "react";
+import Hero1 from "/images/hero/hero-1.png";
+import Hero2 from "/images/hero/hero-2.png";
+import Hero3 from "/images/hero/hero-3.png";
+import Hero4 from "/images/hero/hero-4.jpg";
 
 export default function () {
   return (
@@ -17,17 +21,25 @@ export default function () {
         </div>
         <div className="grid grid-cols-2 grid-rows-5 gap-2 h-[350px]">
           <div
-            className={`w-full h-full max-w-[180px] self-start row-span-2 bg-[url('../../../public/images/hero/hero-1.png')] bg-cover rounded-t-lg place-self-end`}
-          ></div>
+            className={`w-full h-full max-w-[180px] self-start row-span-2 bg-cover rounded-t-lg place-self-end overflow-hidden`}
+          >
+            <img src={Hero1} alt="hero" />
+          </div>
           <div
-            className={`w-full h-full max-w-[180px] row-span-3 bg-[url('../../../public/images/hero/hero-2.png')] bg-cover rounded-t-lg`}
-          ></div>
+            className={`w-full h-full max-w-[180px] row-span-3 bg-cover rounded-t-lg overflow-hidden`}
+          >
+            <img src={Hero2} alt="hero" />
+          </div>
           <div
-            className={`w-full h-full max-w-[180px] row-start-3 row-span-3 bg-[url('../../../public/images/hero/hero-3.png')] bg-cover rounded-b-lg place-self-end`}
-          ></div>
+            className={`w-full h-full max-w-[180px] row-start-3 row-span-3 bg-cover rounded-b-lg place-self-end overflow-hidden`}
+          >
+            <img src={Hero3} alt="hero" />
+          </div>
           <div
-            className={`w-full h-full max-w-[180px] col-start-2 row-start-4 row-end-6 bg-[url('../../../public/images/hero/hero-4.jpg')] bg-cover bg-center rounded-b-lg`}
-          ></div>
+            className={`w-full h-full max-w-[180px] col-start-2 row-start-4 row-end-6 bg-cover bg-center rounded-b-lg overflow-hidden`}
+          >
+            <img src={Hero4} alt="hero" className="scale-[170%]" />
+          </div>
         </div>
       </section>
     </>

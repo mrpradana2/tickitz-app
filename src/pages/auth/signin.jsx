@@ -117,8 +117,8 @@ export default function Signin() {
               <img
                 src={`${
                   openEye
-                    ? "../../../public/icons/icon-auth/eye-off.svg"
-                    : "../../../public/icons/icon-auth/eye.svg"
+                    ? "/icons/icon-auth/eye-off.svg"
+                    : "/icons/icon-auth/eye.svg"
                 }`}
                 alt="icon-eye"
                 className="w-5 absolute bottom-2.5 right-2 cursor-pointer"

@@ -4,7 +4,7 @@ import Google from "/icons/icon-auth/icons-google.svg";
 import Facebook from "/icons/icon-auth/icons-fb.svg";
 import { validationEmail, validationPassword } from "../../hooks/validation.js";
 import { useDispatch } from "react-redux";
-import { addUser, removeAll } from "../../redux/slices/auth.js";
+import { addUser } from "../../redux/slices/auth.js";
 import { addOrderMovie } from "../../redux/slices/orderMovie";
 
 export default function Signup() {
@@ -117,8 +117,8 @@ export default function Signup() {
               <img
                 src={`${
                   openEye
-                    ? "../../../public/icons/icon-auth/eye-off.svg"
-                    : "../../../public/icons/icon-auth/eye.svg"
+                    ? "/icons/icon-auth/eye-off.svg"
+                    : "/icons/icon-auth/eye.svg"
                 }`}
                 alt="icon-eye"
                 className="w-5 absolute bottom-2.5 right-2"
@@ -185,7 +185,6 @@ export default function Signup() {
               <p className="text-sm  text-color-grey hidden md:block">Google</p>
             </button>
             <button
-              onClick={() => dispatch(removeAll())}
               type="button"
               className="p-4 w-max shadow-lg flex justify-center items-center gap-3 border border-slate-200 cursor-pointer transition-all duration-100 hover:scale-[1.03] active:scale-100"
             >

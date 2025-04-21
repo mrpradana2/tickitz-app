@@ -62,7 +62,10 @@ export default function Header() {
             </p>
             <div className="flex gap-3 justify-center">
               <button
-                onClick={logOut}
+                onClick={() => {
+                  logOut();
+                  modalLogOutHandler();
+                }}
                 type="button"
                 className="px-3 py-1 bg-blue-600 text-white rounded-lg cursor-pointer active:scale-[0.99]"
               >

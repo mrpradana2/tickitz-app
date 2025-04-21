@@ -1,11 +1,9 @@
 import React from "react";
 import Qrcode from "/images/qr-code/qr-code.png";
-import { removeAllOrder } from "../../redux/slices/orderMovie";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
 export default function Ticket() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const dataCinema = useSelector((state) => state.dataUserCinema.userCinema);
 
@@ -48,7 +46,6 @@ export default function Ticket() {
           </div>
           <div className="py-8 flex flex-col gap-4 w-full">
             <button
-              onClick={() => dispatch(removeAllOrder())}
               type="button"
               className="button-lg bg-white text-color-primary border-2 border-color-primary cursor-pointer active:scale-[0.97]"
             >
