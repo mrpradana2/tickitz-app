@@ -1,12 +1,59 @@
-# React + Vite
+# 🎬 Tickitz App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Tickitz** adalah aplikasi pemesanan tiket bioskop yang memungkinkan pengguna untuk menjelajahi film yang sedang tayang dan yang akan datang, memilih tempat duduk, dan melakukan pemesanan tiket secara online dengan mudah.
 
-Currently, two official plugins are available:
+## 🚀 Fitur Utama
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Jelajahi Film**: Lihat daftar film yang sedang tayang dan yang akan datang.
+- **Detail Film**: Informasi lengkap tentang film, termasuk sinopsis, jadwal tayang, dan trailer.
+- **Pilih Tempat Duduk**: Pilih tempat duduk favorit Anda dengan tampilan interaktif.
+- **Pembayaran Online**: Lakukan pembayaran tiket secara aman dan cepat.
+- **Riwayat Pemesanan**: Lihat riwayat pemesanan tiket Anda sebelumnya.
 
-## Expanding the ESLint configuration
+## 💦 Teknologi yang Digunakan
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Frontend**: React.js, Redux, Bootstrap
+- **Backend**: not yet using a backend
+- **Database**: not yet using a database
+- **API**: RESTful API
+
+## 📦 Instalasi
+
+Ikuti langkah-langkah berikut untuk menjalankan proyek ini secara lokal:
+
+1. **Kloning repositori:**
+
+   ```bash
+   git clone https://github.com/mrpradana2/tickitz-app.git
+   cd tickitz-app
+   ```
+
+2. **Instal dependensi:**
+
+   ```bash
+   npm install
+   ```
+
+3. **Konfigurasi lingkungan:**
+
+   Salin file `.env.example` menjadi `.env` dan sesuaikan variabel lingkungan sesuai kebutuhan Anda.
+
+4. **Jalankan aplikasi:**
+
+   ```bash
+   npm run dev
+   ```
+
+   Aplikasi akan berjalan di `http://localhost:3000`.
+
+## 📸 Cuplikan Layar
+
+![Tampilan Home](./public/home.png)
+
+## 🤝 Kontribusi
+
+Kontribusi sangat dihargai! Jika Anda ingin berkontribusi pada proyek ini, silakan fork repositori ini dan buat pull request dengan perubahan yang Anda buat.
+
+---
+
+Jika Anda memerlukan bantuan lebih lanjut atau memiliki pertanyaan, jangan ragu untuk menghubungi saya melalui [mrpradana2@gmail.com](mrpradana2@gmail.com).
