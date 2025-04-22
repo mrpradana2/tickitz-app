@@ -12,7 +12,7 @@
 
 ## 💦 Teknologi yang Digunakan
 
-- **Frontend**: React.js, Redux, Bootstrap
+- **Frontend**: React.js, Redux, Tailwind CSS
 - **Backend**: not yet using a backend
 - **Database**: not yet using a database
 - **API**: RESTful API
