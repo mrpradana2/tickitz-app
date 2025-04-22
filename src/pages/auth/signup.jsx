@@ -170,7 +170,7 @@ export default function Signup() {
               href="/auth/signin"
               className="text-sm text-color-primary hover:underline"
             >
-              Log In
+              Sign Up
             </a>
           </p>
           <p className="relative text-center my-4 mb-6 after:content[''] after:absolute after:left-0 after:top-1/2 after:h-[4px] after:w-[45%] after:bg-slate-200 after:rounded-md before:content[''] before:absolute before:right-0 before:top-1/2 before:h-[4px] before:w-[45%] before:bg-slate-200 before:rounded-md before:z-20">
